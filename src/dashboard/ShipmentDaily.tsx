@@ -28,7 +28,7 @@ export const ShipmentDaily: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="p-6 flex-1 flex flex-col justify-between relative min-h-[300px]">
+      <div className="p-6 flex-1 flex flex-col justify-between relative min-h-75">
         {/* Chart Container */}
         <div className="w-full h-64 pr-2">
           <ResponsiveContainer width="100%" height="100%">
