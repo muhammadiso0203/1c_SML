@@ -1,5 +1,6 @@
 import React from 'react';
 import { Factory, Truck, TrendingUp, Target } from 'lucide-react';
+import { usePr010 } from '../../pages/service/usePr010';
 
 interface MetricItem {
   id: string;
@@ -15,7 +16,43 @@ interface MetricItem {
   };
 }
 
-export const MetricCards: React.FC = () => {
+export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) => {
+  const { data: pr010Response, isLoading: isPr010Loading } = usePr010(date);
+
+  const monthName = React.useMemo(() => {
+    if (date.length === 8) {
+      const m = parseInt(date.substring(4, 6), 10) - 1;
+      const months = [
+        "ЯНВАРЬ", "ФЕВРАЛЬ", "МАРТ", "АПРЕЛЬ", "МАЙ", "ИЮНЬ",
+        "ИЮЛЬ", "АВГУСТ", "СЕНТЯБРЬ", "ОКТЯБРЬ", "НОЯБРЬ", "ДЕКАБРЬ"
+      ];
+      return months[m] || "ИЮЛЬ";
+    }
+    return "ИЮЛЬ";
+  }, [date]);
+
+  const dailyShipmentStr = React.useMemo(() => {
+    if (isPr010Loading) return '...';
+    if (pr010Response?.data) {
+      let val = 0;
+      if (pr010Response.data.shipment_PER_DAY !== undefined) {
+        val = pr010Response.data.shipment_PER_DAY;
+      } else if (pr010Response.data.A6) {
+        val = pr010Response.data.A6.reduce((sum, item) => sum + item.remains, 0);
+      }
+      return val.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
+    return '0,0';
+  }, [pr010Response, isPr010Loading]);
+
+  const monthlyShipmentStr = React.useMemo(() => {
+    if (isPr010Loading) return '...';
+    if (pr010Response?.data && pr010Response.data.shipment_PER_month !== undefined) {
+      return pr010Response.data.shipment_PER_month.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
+    return '4 705,4'; // fallback static value
+  }, [pr010Response, isPr010Loading]);
+
   const metrics: MetricItem[] = [
     {
       id: 'output-day',
@@ -35,7 +72,7 @@ export const MetricCards: React.FC = () => {
       icon: <Truck className="w-8 h-8" />,
       labelLine1: 'ОТГРУЗКА',
       labelLine2: 'ЗА ДЕНЬ',
-      value: '247,4',
+      value: dailyShipmentStr,
       unit: 'т',
       colorClass: {
         border: 'border-blue-600',
@@ -47,7 +84,7 @@ export const MetricCards: React.FC = () => {
       id: 'output-july',
       icon: <TrendingUp className="w-8 h-8" />,
       labelLine1: 'ВЫПУСК',
-      labelLine2: 'ЗА ИЮЛЬ',
+      labelLine2: `ЗА ${monthName}`,
       value: '4 910,9',
       unit: 'т',
       colorClass: {
@@ -60,8 +97,8 @@ export const MetricCards: React.FC = () => {
       id: 'shipment-july',
       icon: <Truck className="w-8 h-8" />,
       labelLine1: 'ОТГРУЗКА',
-      labelLine2: 'ЗА ИЮЛЬ',
-      value: '4 705,4',
+      labelLine2: `ЗА ${monthName}`,
+      value: monthlyShipmentStr,
       unit: 'т',
       colorClass: {
         border: 'border-blue-600',

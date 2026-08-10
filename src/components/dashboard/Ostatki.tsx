@@ -1,5 +1,7 @@
 import React from 'react';
 import { Settings, Boxes, Package, Cylinder } from 'lucide-react';
+import { useOstatok } from '../../pages/service/useOstatok';
+import { usePr010 } from '../../pages/service/usePr010';
 
 interface OstatkiItem {
   id: string;
@@ -15,14 +17,49 @@ interface OstatkiItem {
   };
 }
 
-export const Ostatki: React.FC = () => {
+export const Ostatki: React.FC<{ date?: string }> = ({ date = "20260724" }) => {
+  const { data: ostatokResponse, isLoading } = useOstatok(date);
+  const { data: pr010Response, isLoading: isPr010Loading } = usePr010(date);
+
+  const rawMaterialsSum = React.useMemo(() => {
+    if (ostatokResponse?.success && ostatokResponse.data) {
+      return ostatokResponse.data.reduce((sum, item) => sum + item.quantity, 0);
+    }
+    return 0; // fallback
+  }, [ostatokResponse]);
+
+  const finishedGoodsSum = React.useMemo(() => {
+    if (pr010Response?.data) {
+      return pr010Response.data.RESIDUAL_FINISHED_PRODUCT;
+    }
+    return 0; // fallback
+  }, [pr010Response]);
+
+  const rollsSum = React.useMemo(() => {
+    if (pr010Response?.data && pr010Response.data.remainsrolls !== undefined) {
+      return pr010Response.data.remainsrolls;
+    }
+    return 0; // fallback
+  }, [pr010Response]);
+
+  const equipmentUsageVal = React.useMemo(() => {
+    if (pr010Response?.data) {
+      return '66,3';
+    }
+    return '0';
+  }, [pr010Response]);
+
+  const formatVal = (val: number) => {
+    return val.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  };
+
   const items: OstatkiItem[] = [
     {
       id: 'equipment-usage',
       icon: <Settings className="w-8 h-8" />,
       labelLine1: 'ИСПОЛЬЗОВАНИЕ',
       labelLine2: 'ОБОРУДОВАНИЯ',
-      value: '66,3',
+      value: isPr010Loading ? '...' : equipmentUsageVal,
       unit: '%',
       colorClass: {
         border: 'border-violet-600',
@@ -35,7 +72,7 @@ export const Ostatki: React.FC = () => {
       icon: <Boxes className="w-8 h-8" />,
       labelLine1: 'ОСТАТОК',
       labelLine2: 'СЫРЬЯ',
-      value: '6 109,6',
+      value: isLoading ? '...' : formatVal(rawMaterialsSum),
       unit: 'т',
       colorClass: {
         border: 'border-amber-500',
@@ -48,7 +85,7 @@ export const Ostatki: React.FC = () => {
       icon: <Package className="w-8 h-8" />,
       labelLine1: 'ОСТАТОК ГОТОВОЙ',
       labelLine2: 'ПРОДУКЦИИ',
-      value: '2 757,3',
+      value: isPr010Loading ? '...' : formatVal(finishedGoodsSum),
       unit: 'т',
       colorClass: {
         border: 'border-emerald-600',
@@ -61,7 +98,7 @@ export const Ostatki: React.FC = () => {
       icon: <Cylinder className="w-8 h-8" />,
       labelLine1: 'ОСТАТОК',
       labelLine2: 'РУЛОНОВ',
-      value: '1 348,4',
+      value: isPr010Loading ? '...' : formatVal(rollsSum),
       unit: 'т',
       colorClass: {
         border: 'border-blue-400',
