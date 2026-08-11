@@ -1,13 +1,8 @@
 import React from 'react';
 import { CalendarPicker } from './CalendarPicker';
 import {
-  BarChart3,
-  Boxes,
-  LayoutDashboard,
   LogOut,
   Menu,
-  Settings,
-  Truck,
   UserCircle2,
   X
 } from 'lucide-react';
@@ -31,14 +26,6 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-
-  const navItems = [
-    { label: 'Главная', icon: LayoutDashboard },
-    { label: 'Показатели', icon: BarChart3 },
-    { label: 'Отгрузки', icon: Truck },
-    { label: 'Запасы', icon: Boxes },
-    { label: 'Настройки', icon: Settings }
-  ];
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
