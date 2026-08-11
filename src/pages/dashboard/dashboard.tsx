@@ -88,40 +88,58 @@ const Dashboard = () => {
         return `${d}.${m}.${y}`;
     }, [selectedDate]);
 
+    const dashboardBase = import.meta.env.VITE_DASHBOARD_PATH || '/dashboard';
+    const pathname = window.location.pathname;
+
+    // Show full dashboard only on the exact dashboard base path
+    if (pathname === dashboardBase || pathname === `${dashboardBase}/`) {
+        return (
+            <div className="min-h-screen font-sans bg-[#090d16] text-slate-100">
+                <DashboardHeader
+                    subtitle={`к утру ${formattedDate} г.`}
+                    generationDate={`${formattedDate} 08:00`}
+                    selectedDate={selectedDate}
+                    onChangeDate={handleDateChange}
+                />
+                <main className="mx-auto px-6">
+                    <MetricCards date={dateParam} />
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-2 items-stretch">
+                        <ProductionProgram date={dateParam} />
+                        <EquipmentUsage />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-4 md:mt-6">
+                        <ProductionCard date={dateParam} />
+                        <ShipmentCard date={dateParam} />
+                    </div>
+                    <div className="mt-4 md:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+                        <ShipmentStructure date={dateParam} />
+                        <ShipmentDaily date={dateParam} />
+                    </div>
+                    <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div className="lg:col-span-9">
+                            <OstatkiDetailed date={dateParam} />
+                        </div>
+                        <div className="lg:col-span-3">
+                            <KpiTrafficLight />
+                        </div>
+                    </div>
+                    <div className="pb-8">
+                        <DashboardFooter />
+                    </div>
+                </main>
+            </div>
+        );
+    }
+
+    // For subpages show placeholder
     return (
-        <div className="min-h-screen font-sans bg-[#090d16] text-slate-100">
-            <DashboardHeader
-                subtitle={`к утру ${formattedDate} г.`}
-                generationDate={`${formattedDate} 08:00`}
-                selectedDate={selectedDate}
-                onChangeDate={handleDateChange}
-            />
-            <main className="mx-auto px-6">
-                <MetricCards date={dateParam} />
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-2 items-stretch">
-                    <ProductionProgram date={dateParam} />
-                    <EquipmentUsage />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-4 md:mt-6">
-                    <ProductionCard date={dateParam} />
-                    <ShipmentCard date={dateParam} />
-                </div>
-                <div className="mt-4 md:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-                    <ShipmentStructure date={dateParam} />
-                    <ShipmentDaily date={dateParam} />
-                </div>
-                <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div className="lg:col-span-9">
-                        <OstatkiDetailed date={dateParam} />
-                    </div>
-                    <div className="lg:col-span-3">
-                        <KpiTrafficLight />
-                    </div>
-                </div>
-                <div className="pb-8">
-                    <DashboardFooter />
-                </div>
-            </main>
+        <div className="min-h-screen flex items-center justify-center bg-[#090d16] text-slate-100 px-4">
+            <div className="max-w-xl rounded-3xl border border-slate-700 bg-slate-900/90 p-10 text-center shadow-2xl">
+                <h1 className="text-3xl font-bold text-white">В разработке</h1>
+                <p className="mt-4 text-slate-300">
+                    Этот раздел пока не доступен. Вернитесь на Главную для просмотра данных.
+                </p>
+            </div>
         </div>
     );
 };

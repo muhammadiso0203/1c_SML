@@ -145,16 +145,57 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               </button>
             </div>
 
-            <div className="absolute bottom-0 left-0 right-0 border-t border-slate-800 bg-slate-900/80 p-3">
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/30 bg-red-600/20 px-3 py-2.5 text-sm font-semibold text-red-300 transition-all hover:bg-red-600/30 cursor-pointer"
-              >
-                <LogOut className="h-4 w-4" />
-                Выход
-              </button>
-            </div>
+            <nav className="p-4">
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { navigate('/dashboard'); setIsSidebarOpen(false); }}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                  >
+                    <span className="ml-1">Главная</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { navigate('/dashboard/usage'); setIsSidebarOpen(false); }}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                  >
+                    <span className="ml-1">Использование мощности</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { navigate('/dashboard/hr'); setIsSidebarOpen(false); }}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                  >
+                    <span className="ml-1">Кадры</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { navigate('/dashboard/finance'); setIsSidebarOpen(false); }}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                  >
+                    <span className="ml-1">Финансы</span>
+                  </button>
+                </li>
+              </ul>
+
+              <div className="absolute bottom-0 left-0 right-0 border-t border-slate-800 bg-slate-900/80 p-3">
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/30 bg-red-600/20 px-3 py-2.5 text-sm font-semibold text-red-300 transition-all hover:bg-red-600/30 cursor-pointer"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Выход
+                </button>
+              </div>
+            </nav>
           </aside>
         </div>
       )}

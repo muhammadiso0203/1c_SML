@@ -16,8 +16,7 @@ export interface UserResponse {
 export const useLogin = () => {
   return useMutation<UserResponse, Error, LoginCredentials>({
     mutationFn: async ({ username, password }) => {
-      console.log(api.defaults.baseURL);
-      
+      // console.log(api.defaults.baseURL);
       const token = btoa(`${username}:${password}`);
       const response = await api.get<UserResponse>("/dashboard/user", {
         headers: {
