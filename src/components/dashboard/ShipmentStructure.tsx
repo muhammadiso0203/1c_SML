@@ -133,22 +133,22 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
     <div className="bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden flex flex-col h-full justify-between shadow-xl">
       {/* Header */}
       <div className="bg-[#111827] border-b border-slate-800 px-6 py-4 flex items-center justify-between">
-        <h3 className="text-white text-sm font-extrabold uppercase tracking-wide text-center w-full">
+        <h3 className="text-white text-[clamp(0.7rem,1vw,0.9rem)] font-extrabold uppercase tracking-wide text-center w-full">
           5. СТРУКТУРА ОТГРУЗКИ ЗА {monthName} <span className="text-slate-400 font-normal lowercase">(по весу, т)</span>
         </h3>
       </div>
 
       {/* Content */}
-      <div className="p-6 flex-1 flex flex-col lg:flex-row gap-8 items-center justify-between relative min-h-75">
+      <div className="p-3 sm:p-6 flex-1 flex flex-col xl:flex-row gap-4 sm:gap-8 items-center justify-between relative min-h-75">
         {isPr010Loading && (
           <div className="absolute inset-0 bg-[#111827]/80 flex items-center justify-center z-10">
             <div className="inline-block w-8 h-8 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
 
-        <div className={`flex-1 flex flex-col lg:flex-row gap-8 items-center justify-between w-full transition-all duration-300 ${isPr010Loading ? 'opacity-40' : ''}`}>
+        <div className={`flex-1 flex flex-col xl:flex-row gap-4 sm:gap-8 items-center justify-between w-full transition-all duration-300 ${isPr010Loading ? 'opacity-40' : ''}`}>
           {/* Left Side: Pie Chart */}
-          <div className="w-full lg:w-1/2 h-64 flex items-center justify-center">
+          <div className="w-full xl:w-1/2 h-52 sm:h-64 flex items-center justify-center">
             {data.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -178,7 +178,7 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
           </div>
 
           {/* Right Side: Detailed Table */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-between text-xs font-bold text-slate-300 h-full">
+          <div className="w-full xl:w-1/2 flex flex-col justify-between text-xs font-bold text-slate-300 h-full">
             <div className="flex flex-col gap-2 overflow-y-auto max-h-55 pr-1">
               {data.map((item) => (
                 <div key={item.name} className="flex items-center justify-between py-0.5">
@@ -187,13 +187,13 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
                       className="w-3 h-3 rounded shrink-0"
                       style={{ backgroundColor: item.color }}
                     />
-                    <span className="truncate text-[11px] font-bold text-slate-200">
+                    <span className="truncate text-[clamp(0.6rem,0.8vw,0.7rem)] font-bold text-slate-200">
                       {item.name}
                     </span>
                   </div>
                   <div className="flex items-center gap-4 text-right">
-                    <span className="font-mono text-slate-100 font-bold text-[11px]">{item.valueStr} т</span>
-                    <span className="font-mono text-slate-400 w-12 text-[11px]">{item.percent}</span>
+                    <span className="font-mono text-slate-100 font-bold text-[clamp(0.6rem,0.8vw,0.7rem)]">{item.valueStr} т</span>
+                    <span className="font-mono text-slate-400 w-12 text-[clamp(0.6rem,0.8vw,0.7rem)]">{item.percent}</span>
                   </div>
                 </div>
               ))}
@@ -202,11 +202,11 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
             <hr className="border-slate-800 my-3" />
 
             {/* TOTAL Row */}
-            <div className="flex items-center justify-between text-xs font-extrabold text-blue-400 uppercase tracking-wide mt-auto">
+            <div className="flex items-center justify-between text-[clamp(0.6rem,0.8vw,0.75rem)] font-extrabold text-blue-400 uppercase tracking-wide mt-auto">
               <span>ИТОГО</span>
               <div className="flex items-center gap-4 text-right">
-                <span className="font-mono font-black text-blue-400 text-xs">{totalValueStr} т</span>
-                <span className="font-mono text-blue-400 w-12 text-xs">100,0%</span>
+                <span className="font-mono font-black text-blue-400 text-[clamp(0.6rem,0.8vw,0.75rem)]">{totalValueStr} т</span>
+                <span className="font-mono text-blue-400 w-12 text-[clamp(0.6rem,0.8vw,0.75rem)]">100,0%</span>
               </div>
             </div>
           </div>

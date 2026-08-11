@@ -31,14 +31,14 @@ export const EquipmentUsage: React.FC = () => {
       <div>
         {/* Title Header */}
         <div className="bg-[#1e293b] px-6 py-3 border-b border-slate-800">
-          <h2 className="text-white text-sm font-extrabold uppercase tracking-wide">
+          <h2 className="text-white text-[clamp(0.7rem,1vw,0.9rem)] font-extrabold uppercase tracking-wide">
             2. ИСПОЛЬЗОВАНИЕ ОБОРУДОВАНИЯ
           </h2>
         </div>
 
         {/* Table Content */}
-        <div className="p-4 overflow-x-auto">
-          <table className="w-full border-collapse text-left font-sans text-sm">
+        <div className="p-2 sm:p-4 overflow-hidden">
+          <table className="w-full border-collapse text-left font-sans text-[clamp(0.55rem,0.75vw,0.8rem)] table-fixed">
             <thead>
               {/* Header Row 1 */}
               <tr className="border-b border-slate-800">
@@ -71,7 +71,7 @@ export const EquipmentUsage: React.FC = () => {
                   {/* Equipment Name & Status Dot */}
                   <td className="py-2 px-3 font-medium text-slate-200 flex items-center justify-between">
                     <span>{row.name}</span>
-                    <span className={`w-3.5 h-3.5 rounded-full mr-2 shrink-0 ${statusColors[row.status]}`} />
+                    <span className={`w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full mr-2 shrink-0 ${statusColors[row.status]}`} />
                   </td>
                   {/* Day Value */}
                   <td className="py-2 px-3 text-center font-semibold text-slate-200 border-l border-slate-800 font-mono">
@@ -89,22 +89,22 @@ export const EquipmentUsage: React.FC = () => {
       </div>
 
       {/* Legend Footer */}
-      <div className="border-t border-slate-800 bg-[#172033] px-6 py-3 mt-auto">
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-bold text-slate-300">
+      <div className="border-t border-slate-800 bg-[#172033] px-3 py-3 sm:px-6 mt-auto">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[clamp(0.55rem,0.8vw,0.7rem)] font-bold text-slate-300">
           <div className="flex items-center gap-1.5">
-            <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 shrink-0" />
+            <span className="w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full bg-emerald-500 shrink-0" />
             <span>&ge; 70%</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3.5 h-3.5 rounded-full bg-amber-400 shrink-0" />
+            <span className="w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full bg-amber-400 shrink-0" />
             <span>40 &ndash; 69%</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3.5 h-3.5 rounded-full bg-orange-500 shrink-0" />
+            <span className="w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full bg-orange-500 shrink-0" />
             <span>20 &ndash; 39%</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3.5 h-3.5 rounded-full bg-rose-500 shrink-0" />
+            <span className="w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full bg-rose-500 shrink-0" />
             <span>&lt; 20%</span>
           </div>
         </div>

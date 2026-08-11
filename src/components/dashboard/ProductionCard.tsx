@@ -58,35 +58,35 @@ export const ProductionCard: React.FC<{ date?: string }> = ({ date = "20260724" 
     <div className="bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden flex flex-col h-full justify-between shadow-xl">
       {/* Header */}
       <div className="bg-[#1e293b] border-b border-slate-800 px-4 py-2.5 flex items-center gap-2">
-        <Factory className="w-5 h-5 text-blue-400" />
-        <h3 className="text-white text-xs md:text-sm font-extrabold uppercase tracking-wider text-center flex-1 pr-5">
+        <Factory className="w-[clamp(0.9rem,1.2vw,1.25rem)] h-[clamp(0.9rem,1.2vw,1.25rem)] text-blue-400" />
+        <h3 className="text-white text-[clamp(0.65rem,0.85vw,0.85rem)] font-extrabold uppercase tracking-wider text-center flex-1 pr-5">
           3. ПРОИЗВОДСТВО
         </h3>
       </div>
 
       {/* Content */}
-      <div className="p-4 flex-1 flex flex-col justify-between">
-        <div className={`flex items-center justify-between py-2 transition-all duration-300 ${isLoading ? 'opacity-60 animate-pulse' : ''}`}>
+      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
+        <div className={`flex flex-col gap-3 py-2 transition-all duration-300 sm:flex-row sm:items-center sm:justify-between ${isLoading ? 'opacity-60 animate-pulse' : ''}`}>
           {/* Day Metric */}
           <div className="flex-1 text-center">
-            <span className="text-[10px] md:text-xs font-bold text-slate-300 block mb-1">
+            <span className="text-[clamp(0.55rem,0.8vw,0.7rem)] font-bold text-slate-300 block mb-1">
               За день ({formattedDate})
             </span>
-            <span className="text-2xl md:text-3xl font-black text-emerald-400 tracking-tight">
-              {isLoading ? '...' : formatVal(dailyProduction)} <span className="text-sm font-bold ml-0.5">т</span>
+            <span className="text-[clamp(1rem,1.8vw,2.2rem)] font-black text-emerald-400 tracking-tight">
+              {isLoading ? '...' : formatVal(dailyProduction)} <span className="text-[clamp(0.7rem,0.9vw,0.9rem)] font-bold ml-0.5">т</span>
             </span>
           </div>
 
           {/* Vertical Divider */}
-          <div className="w-px h-12 bg-slate-800 shrink-0" />
+          <div className="hidden sm:block w-px h-12 bg-slate-800 shrink-0" />
 
           {/* Month Metric */}
           <div className="flex-1 text-center">
-            <span className="text-[10px] md:text-xs font-bold text-slate-300 block mb-1">
+            <span className="text-[clamp(0.55rem,0.8vw,0.7rem)] font-bold text-slate-300 block mb-1">
               За {monthName}
             </span>
-            <span className="text-2xl md:text-3xl font-black text-emerald-400 tracking-tight">
-              {isLoading ? '...' : formatVal(monthlyProduction)} <span className="text-sm font-bold ml-0.5">т</span>
+            <span className="text-[clamp(1rem,1.8vw,2.2rem)] font-black text-emerald-400 tracking-tight">
+              {isLoading ? '...' : formatVal(monthlyProduction)} <span className="text-[clamp(0.7rem,0.9vw,0.9rem)] font-bold ml-0.5">т</span>
             </span>
           </div>
         </div>
@@ -96,7 +96,7 @@ export const ProductionCard: React.FC<{ date?: string }> = ({ date = "20260724" 
 
         {/* Bottom text */}
         <div className={`text-center py-1 transition-all duration-300 ${isLoading ? 'opacity-60 animate-pulse' : ''}`}>
-          <span className="text-xs font-bold text-slate-400">
+          <span className="text-[clamp(0.6rem,0.8vw,0.75rem)] font-bold text-slate-400">
             Среднесуточный выпуск за {monthName}:{' '}
             <span className="text-blue-400 font-extrabold">{isLoading ? '...' : `${formatVal(avgProduction)} т`}</span>
           </span>

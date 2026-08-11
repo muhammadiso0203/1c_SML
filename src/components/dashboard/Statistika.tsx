@@ -219,22 +219,24 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
 
   return (
     <div className="w-full py-4">
-      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 xl:grid-cols-9 gap-2.5">
+      <div className="grid w-full grid-cols-2 gap-2.5 sm:grid-cols-3 xl:grid-cols-9">
         {metrics.map((metric) => (
           <div
             key={metric.id}
-            className={`flex flex-col justify-between p-3 rounded-xl border ${metric.colorClass.border} ${metric.colorClass.bg} backdrop-blur-sm shadow-lg transition-all duration-200 hover:scale-[1.02]`}
+            className={`flex min-w-0 h-full flex-col justify-between rounded-xl border p-2.5 sm:p-3 ${metric.colorClass.border} ${metric.colorClass.bg} backdrop-blur-sm shadow-lg transition-all duration-200 hover:scale-[1.01]`}
           >
             {/* Top Row: Icon & Label */}
-            <div className="flex items-center gap-2">
-              <div className={`${metric.colorClass.icon} p-0.5 shrink-0`}>
-                {metric.icon}
+            <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+              <div className={`${metric.colorClass.icon} shrink-0`}>
+                <div className="w-[clamp(1rem,1.5vw,1.75rem)] h-[clamp(1rem,1.5vw,1.75rem)] [&_svg]:w-full [&_svg]:h-full">
+                  {metric.icon}
+                </div>
               </div>
-              <div className="flex flex-col leading-tight min-w-0">
-                <span className={`text-[10px] font-extrabold tracking-wider truncate ${metric.colorClass.text}`}>
+              <div className="flex min-w-0 flex-col leading-tight">
+                <span className={`truncate text-[clamp(0.58rem,0.8vw,0.9rem)] font-extrabold tracking-wider ${metric.colorClass.text}`}>
                   {metric.labelLine1}
                 </span>
-                <span className={`text-[10px] font-extrabold tracking-wider truncate ${metric.colorClass.text}`}>
+                <span className={`truncate text-[clamp(0.58rem,0.8vw,0.9rem)] font-extrabold tracking-wider ${metric.colorClass.text}`}>
                   {metric.labelLine2}
                 </span>
               </div>
@@ -242,10 +244,10 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
 
             {/* Bottom Row: Large Value */}
             <div className="mt-3 text-center">
-              <span className={`text-xl sm:text-2xl font-extrabold tracking-tight ${metric.colorClass.text}`}>
+              <span className={`text-[clamp(1.05rem,1.9vw,2.2rem)] font-extrabold tracking-tight ${metric.colorClass.text}`}>
                 {metric.value}
               </span>
-              <span className={`text-xs font-bold ml-1 align-baseline ${metric.colorClass.text}`}>
+              <span className={`ml-1 align-baseline text-[clamp(0.7rem,0.9vw,1rem)] font-bold ${metric.colorClass.text}`}>
                 {metric.unit}
               </span>
             </div>

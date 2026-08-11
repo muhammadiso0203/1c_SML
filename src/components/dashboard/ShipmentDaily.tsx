@@ -64,13 +64,13 @@ export const ShipmentDaily: React.FC<{ date?: string }> = ({ date = "20260724" }
     <div className="bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden flex flex-col h-full justify-between shadow-xl">
       {/* Header */}
       <div className="bg-[#111827] border-b border-slate-800 px-6 py-4 flex items-center justify-between">
-        <h3 className="text-white text-sm font-extrabold uppercase tracking-wide text-center w-full">
+        <h3 className="text-white text-[clamp(0.7rem,1vw,0.9rem)] font-extrabold uppercase tracking-wide text-center w-full">
           6. ОТГРУЗКА ЗА ДЕНЬ ({formattedTitleDate}), т
         </h3>
       </div>
 
       {/* Content */}
-      <div className="p-6 flex-1 flex flex-col justify-between relative min-h-75">
+      <div className="p-3 sm:p-6 flex-1 flex flex-col justify-between relative min-h-75">
         {error && (
           <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center z-10 p-4 text-center">
             <span className="text-xs text-rose-400 font-bold">Ошибка загрузки</span>
@@ -79,7 +79,7 @@ export const ShipmentDaily: React.FC<{ date?: string }> = ({ date = "20260724" }
         )}
         <div className={`transition-all duration-300 flex-1 flex flex-col justify-between h-full ${isLoading ? 'opacity-60 animate-pulse' : ''}`}>
           {/* Chart Container */}
-          <div className="w-full h-64 pr-2">
+          <div className="w-full h-52 sm:h-64 pr-1 sm:pr-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={displayData}
@@ -114,12 +114,12 @@ export const ShipmentDaily: React.FC<{ date?: string }> = ({ date = "20260724" }
           </div>
 
           {/* Floating TOTAL Box */}
-          <div className="absolute bottom-25 right-6 bg-[#1e293b] border border-slate-700 rounded-lg px-5 py-3 flex flex-col items-center shadow-lg">
-            <span className="text-blue-400 text-[10px] font-black uppercase tracking-wider mb-0.5">
+          <div className="absolute bottom-2 right-2 sm:bottom-25 sm:right-6 bg-[#1e293b] border border-slate-700 rounded-lg px-3 py-2 sm:px-5 sm:py-3 flex flex-col items-center shadow-lg">
+            <span className="text-blue-400 text-[clamp(0.55rem,0.75vw,0.7rem)] font-black uppercase tracking-wider mb-0.5">
               ИТОГО
             </span>
-            <span className="text-xl md:text-2xl font-black text-blue-400 tracking-tight">
-              {totalShipmentStr} <span className="text-sm font-bold ml-0.5">т</span>
+            <span className="text-[clamp(1rem,1.8vw,1.8rem)] font-black text-blue-400 tracking-tight">
+              {totalShipmentStr} <span className="text-[clamp(0.7rem,0.9vw,0.9rem)] font-bold ml-0.5">т</span>
             </span>
           </div>
         </div>

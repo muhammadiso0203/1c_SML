@@ -61,10 +61,16 @@ const Login = () => {
             });
           }
         },
-        onError: (error: any) => {
+        onError: (error: unknown) => {
+          const apiError = error as {
+            response?: {
+              data?: { message?: string };
+            };
+            message?: string;
+          };
           const errorMsg =
-            error.response?.data?.message ||
-            error.message ||
+            apiError.response?.data?.message ||
+            apiError.message ||
             "Login yoki parol noto'g'ri!";
           toast.error("Kirishda xatolik!", {
             description: errorMsg,
