@@ -17,7 +17,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://base.migjs.uz:40318',
+        target: 'http://base.migjs.uz:40320',
         changeOrigin: true,
         secure: false,
         rewrite: (reqPath) => reqPath.replace(/^\/api/, ''),

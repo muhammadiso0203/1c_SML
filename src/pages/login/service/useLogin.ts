@@ -10,7 +10,7 @@ export interface UserResponse {
   success: boolean;
   statusCode: number;
   message?: string;
-  data?: any;
+  data?: Record<string, unknown> | null;
 }
 
 export const useLogin = () => {
