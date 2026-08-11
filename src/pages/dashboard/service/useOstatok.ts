@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import api from "../../config/config";
+import api from "../../../config/config";
 import type { OstatokResponse } from "./interface";
 
 

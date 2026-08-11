@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
-import { usePr010 } from '../../pages/service/usePr010';
+import { usePr010 } from '../../pages/dashboard/service/usePr010';
 
 
 
@@ -61,10 +61,10 @@ export const ShipmentDaily: React.FC<{ date?: string }> = ({ date = "20260724" }
   const displayData = apiData.length > 0 ? apiData : [];
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col h-full justify-between">
+    <div className="bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden flex flex-col h-full justify-between shadow-xl">
       {/* Header */}
-      <div className="bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between">
-        <h3 className="text-[#002f6c] text-sm font-extrabold uppercase tracking-wide text-center w-full">
+      <div className="bg-[#111827] border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+        <h3 className="text-white text-sm font-extrabold uppercase tracking-wide text-center w-full">
           6. ОТГРУЗКА ЗА ДЕНЬ ({formattedTitleDate}), т
         </h3>
       </div>
@@ -72,8 +72,8 @@ export const ShipmentDaily: React.FC<{ date?: string }> = ({ date = "20260724" }
       {/* Content */}
       <div className="p-6 flex-1 flex flex-col justify-between relative min-h-75">
         {error && (
-          <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-10 p-4 text-center">
-            <span className="text-xs text-red-500 font-bold">Ошибка загрузки</span>
+          <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center z-10 p-4 text-center">
+            <span className="text-xs text-rose-400 font-bold">Ошибка загрузки</span>
             <span className="text-[10px] text-slate-400 mt-1">{error.message}</span>
           </div>
         )}
@@ -89,23 +89,23 @@ export const ShipmentDaily: React.FC<{ date?: string }> = ({ date = "20260724" }
                 <XAxis
                   type="number"
                   domain={[0, (dataMax: number) => Math.ceil((dataMax || 120) * 1.2 / 20) * 20]}
-                  tick={{ fill: '#64748b', fontSize: 10, fontWeight: 'bold' }}
-                  axisLine={{ stroke: '#cbd5e1' }}
+                  tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 'bold' }}
+                  axisLine={{ stroke: '#334155' }}
                   tickLine={true}
                 />
                 <YAxis
                   type="category"
                   dataKey="name"
-                  tick={{ fill: '#334155', fontSize: 10, fontWeight: 'bold' }}
-                  axisLine={{ stroke: '#cbd5e1' }}
+                  tick={{ fill: '#cbd5e1', fontSize: 10, fontWeight: 'bold' }}
+                  axisLine={{ stroke: '#334155' }}
                   tickLine={true}
                   width={120}
                 />
-                <Bar dataKey="value" fill="#0b3a82" radius={[0, 4, 4, 0]} barSize={12}>
+                <Bar dataKey="value" fill="#3b82f6" radius={[0, 4, 4, 0]} barSize={12}>
                   <LabelList
                     dataKey="valueStr"
                     position="right"
-                    style={{ fill: '#334155', fontSize: 10, fontWeight: 'extrabold' }}
+                    style={{ fill: '#f1f5f9', fontSize: 10, fontWeight: 'extrabold' }}
                     offset={8}
                   />
                 </Bar>
@@ -114,11 +114,11 @@ export const ShipmentDaily: React.FC<{ date?: string }> = ({ date = "20260724" }
           </div>
 
           {/* Floating TOTAL Box */}
-          <div className="absolute bottom-25 right-6 bg-blue-50 border border-blue-100 rounded-lg px-5 py-3 flex flex-col items-center">
-            <span className="text-[#002f6c] text-[10px] font-black uppercase tracking-wider mb-0.5">
+          <div className="absolute bottom-25 right-6 bg-[#1e293b] border border-slate-700 rounded-lg px-5 py-3 flex flex-col items-center shadow-lg">
+            <span className="text-blue-400 text-[10px] font-black uppercase tracking-wider mb-0.5">
               ИТОГО
             </span>
-            <span className="text-xl md:text-2xl font-black text-[#002f6c] tracking-tight">
+            <span className="text-xl md:text-2xl font-black text-blue-400 tracking-tight">
               {totalShipmentStr} <span className="text-sm font-bold ml-0.5">т</span>
             </span>
           </div>

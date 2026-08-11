@@ -1,11 +1,38 @@
-import Dashboard from "./pages/dashboard";
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "sonner";
+import Login from "./pages/login/login";
+import Dashboard from "./pages/dashboard/dashboard";
 
+const dashboardPath = import.meta.env.VITE_DASHBOARD_PATH || "/dashboard";
+
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+  return <>{children}</>;
+};
 
 const App = () => {
   return (
-    <div className="min-h-screen font-sans">
-      <Dashboard />
-    </div>
+    <BrowserRouter>
+      <Toaster richColors position="top-right" />
+      <div className="min-h-screen font-sans bg-slate-950 text-slate-100">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path={dashboardPath}
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 };
 

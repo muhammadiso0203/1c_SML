@@ -27,10 +27,10 @@ export const EquipmentUsage: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col h-full justify-between">
+    <div className="w-full bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden flex flex-col h-full justify-between shadow-xl text-slate-200">
       <div>
         {/* Title Header */}
-        <div className="bg-[#002f6c] px-6 py-3">
+        <div className="bg-[#1e293b] px-6 py-3 border-b border-slate-800">
           <h2 className="text-white text-sm font-extrabold uppercase tracking-wide">
             2. ИСПОЛЬЗОВАНИЕ ОБОРУДОВАНИЯ
           </h2>
@@ -41,21 +41,21 @@ export const EquipmentUsage: React.FC = () => {
           <table className="w-full border-collapse text-left font-sans text-sm">
             <thead>
               {/* Header Row 1 */}
-              <tr className="border-b border-slate-200">
-                <th className="py-2.5 px-3 font-bold text-slate-800 w-1/2" rowSpan={2}>
+              <tr className="border-b border-slate-800">
+                <th className="py-2.5 px-3 font-bold text-slate-200 w-1/2" rowSpan={2}>
                   Вид оборудования
                 </th>
-                <th className="py-1 px-3 font-bold text-slate-800 text-center border-l border-slate-200" colSpan={2}>
+                <th className="py-1 px-3 font-bold text-slate-200 text-center border-l border-slate-800" colSpan={2}>
                   Использование, %
                 </th>
               </tr>
               {/* Header Row 2 */}
-              <tr className="border-b border-slate-200 bg-slate-50/50">
-                <th className="py-1.5 px-3 font-bold text-slate-600 text-center border-l border-slate-200">
+              <tr className="border-b border-slate-800 bg-[#172033]">
+                <th className="py-1.5 px-3 font-bold text-slate-300 text-center border-l border-slate-800">
                   За день<br />
                   <span className="text-[10px] text-slate-400 font-normal">30.07.2026</span>
                 </th>
-                <th className="py-1.5 px-3 font-bold text-slate-600 text-center border-l border-slate-200">
+                <th className="py-1.5 px-3 font-bold text-slate-300 text-center border-l border-slate-800">
                   За июль
                 </th>
               </tr>
@@ -64,21 +64,21 @@ export const EquipmentUsage: React.FC = () => {
               {rows.map((row, index) => (
                 <tr
                   key={row.name}
-                  className={`border-b border-slate-100 hover:bg-slate-50/40 transition-colors duration-150 ${
-                    index % 2 === 1 ? 'bg-slate-50/20' : ''
+                  className={`border-b border-slate-800/60 hover:bg-slate-800/40 transition-colors duration-150 ${
+                    index % 2 === 1 ? 'bg-slate-800/20' : ''
                   }`}
                 >
                   {/* Equipment Name & Status Dot */}
-                  <td className="py-2 px-3 font-medium text-slate-700 flex items-center justify-between">
+                  <td className="py-2 px-3 font-medium text-slate-200 flex items-center justify-between">
                     <span>{row.name}</span>
                     <span className={`w-3.5 h-3.5 rounded-full mr-2 shrink-0 ${statusColors[row.status]}`} />
                   </td>
                   {/* Day Value */}
-                  <td className="py-2 px-3 text-center font-semibold text-slate-700 border-l border-slate-200 font-mono">
+                  <td className="py-2 px-3 text-center font-semibold text-slate-200 border-l border-slate-800 font-mono">
                     {row.dayValue}
                   </td>
                   {/* July Value */}
-                  <td className="py-2 px-3 text-center font-semibold text-slate-700 border-l border-slate-200 font-mono">
+                  <td className="py-2 px-3 text-center font-semibold text-slate-200 border-l border-slate-800 font-mono">
                     {row.julyValue}
                   </td>
                 </tr>
@@ -89,8 +89,8 @@ export const EquipmentUsage: React.FC = () => {
       </div>
 
       {/* Legend Footer */}
-      <div className="border-t border-slate-100 bg-slate-50/60 px-6 py-3 mt-auto">
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-bold text-slate-600">
+      <div className="border-t border-slate-800 bg-[#172033] px-6 py-3 mt-auto">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-bold text-slate-300">
           <div className="flex items-center gap-1.5">
             <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 shrink-0" />
             <span>&ge; 70%</span>

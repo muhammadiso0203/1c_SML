@@ -1,7 +1,7 @@
 import React from 'react';
 import { Settings, Boxes, Package, Cylinder } from 'lucide-react';
-import { useOstatok } from '../../pages/service/useOstatok';
-import { usePr010 } from '../../pages/service/usePr010';
+import { useOstatok } from '../../pages/dashboard/service/useOstatok';
+import { usePr010 } from '../../pages/dashboard/service/usePr010';
 
 interface OstatkiItem {
   id: string;

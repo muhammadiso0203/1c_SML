@@ -1,16 +1,15 @@
 import React from 'react';
-import { DashboardHeader } from '../components/dashboard/Header';
-import { ProductionCard } from '../components/dashboard/ProductionCard';
-import { ShipmentCard } from '../components/dashboard/ShipmentCard';
-import { Ostatki } from '../components/dashboard/Ostatki';
-import { ProductionProgram } from '../components/dashboard/ProductionProgram';
-import { EquipmentUsage } from '../components/dashboard/EquipmentUsage';
-import { MetricCards } from '../components/dashboard/Statistika';
-import { ShipmentStructure } from '../components/dashboard/ShipmentStructure';
-import { ShipmentDaily } from '../components/dashboard/ShipmentDaily';
-import { OstatkiDetailed } from '../components/dashboard/OstatkiDetailed';
-import { KpiTrafficLight } from '../components/dashboard/KpiTrafficLight';
-import { DashboardFooter } from '../components/dashboard/Footer';
+import { DashboardHeader } from '../../components/dashboard/Header';
+import { ProductionCard } from '../../components/dashboard/ProductionCard';
+import { ShipmentCard } from '../../components/dashboard/ShipmentCard';
+import { ProductionProgram } from '../../components/dashboard/ProductionProgram';
+import { EquipmentUsage } from '../../components/dashboard/EquipmentUsage';
+import { MetricCards } from '../../components/dashboard/Statistika';
+import { ShipmentStructure } from '../../components/dashboard/ShipmentStructure';
+import { ShipmentDaily } from '../../components/dashboard/ShipmentDaily';
+import { OstatkiDetailed } from '../../components/dashboard/OstatkiDetailed';
+import { KpiTrafficLight } from '../../components/dashboard/KpiTrafficLight';
+import { DashboardFooter } from '../../components/dashboard/Footer';
 
 const Dashboard = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -90,16 +89,15 @@ const Dashboard = () => {
     }, [selectedDate]);
 
     return (
-        <div className="min-h-screen font-sans bg-slate-50 text-slate-900">
+        <div className="min-h-screen font-sans bg-[#090d16] text-slate-100">
             <DashboardHeader
                 subtitle={`к утру ${formattedDate} г.`}
                 generationDate={`${formattedDate} 08:00`}
                 selectedDate={selectedDate}
                 onChangeDate={handleDateChange}
             />
-            <main className="max-w-7xl mx-auto px-6">
+            <main className="mx-auto px-6">
                 <MetricCards date={dateParam} />
-                <Ostatki date={dateParam} />
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2 items-stretch">
                     <ProductionProgram date={dateParam} />
                     <EquipmentUsage />

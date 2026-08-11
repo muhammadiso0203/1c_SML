@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
-import { useOstatok } from '../../pages/service/useOstatok';
-import { usePr010 } from '../../pages/service/usePr010';
+import { useOstatok } from '../../pages/dashboard/service/useOstatok';
+import { usePr010 } from '../../pages/dashboard/service/usePr010';
 
 interface TableRowData {
   name: string;
@@ -78,7 +78,7 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
     if (d.includes("7 цех Промежуточный склад") || d.includes("7ц склад РПП")) {
       return { name: "7 цех склад РПП", chartName: "7ц склад РПП" };
     }
-    
+
     let chartName = d;
     if (d.startsWith("2 цех ")) chartName = d.replace("2 цех ", "2ц ");
     else if (d.startsWith("3 цех ")) chartName = d.replace("3 цех ", "3ц ");
@@ -179,50 +179,50 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
   const displayTotalRawMaterialsStr = apiRawMaterials.length > 0 ? totalRawMaterialsStr : '0,0';
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col ">
+    <div className="bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden flex flex-col shadow-xl">
       {/* Header */}
-      <div className="bg-[#f0f4f9] border-b border-slate-100 px-6 py-3.5 flex items-center justify-center">
-        <h2 className="text-[#002f6c] text-sm font-extrabold uppercase tracking-wide text-center">
+      <div className="bg-[#1e293b] border-b border-slate-800 px-6 py-3.5 flex items-center justify-center">
+        <h2 className="text-white text-sm font-extrabold uppercase tracking-wide text-center">
           7. ОСТАТКИ
         </h2>
       </div>
 
       {/* Main Content */}
-      <div className="p-6 grid grid-cols-3 divide-x divide-slate-200">
+      <div className="p-6 grid grid-cols-3 divide-x divide-slate-800">
 
         {/* Column 1: СЫРЬЕ */}
         <div className="flex flex-col justify-between pr-6 relative min-h-87.5">
           {error && (
-            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-10 p-4 text-center">
-              <span className="text-xs text-red-500 font-bold">Ошибка загрузки</span>
+            <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center z-10 p-4 text-center">
+              <span className="text-xs text-rose-400 font-bold">Ошибка загрузки</span>
               <span className="text-[10px] text-slate-400 mt-1">{error.message}</span>
             </div>
           )}
           <div className={`transition-all duration-300 ${isLoading ? 'opacity-60 animate-pulse' : ''}`}>
-            <h3 className="text-emerald-700 text-[10px] font-black uppercase tracking-wide mb-3 flex items-center gap-2">
+            <h3 className="text-emerald-400 text-[10px] font-black uppercase tracking-wide mb-3 flex items-center gap-2">
               7.1. ОСТАТОК СЫРЬЯ: <span className="underline">{displayTotalRawMaterialsStr} т</span>
               {isLoading && (
-                <span className="inline-block w-3.5 h-3.5 border-2 border-emerald-700 border-t-transparent rounded-full animate-spin shrink-0"></span>
+                <span className="inline-block w-3.5 h-3.5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin shrink-0"></span>
               )}
             </h3>
 
             <table className="w-full text-[10px] text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 text-slate-500 font-bold">
+                <tr className="border-b border-slate-800 text-slate-400 font-bold">
                   <th className="py-1.5 pr-2">Вид сырья</th>
                   <th className="py-1.5 px-2 text-right">Остаток, т</th>
                   <th className="py-1.5 pl-2 text-right">Доля</th>
                 </tr>
               </thead>
-              <tbody className="font-bold text-slate-700">
+              <tbody className="font-bold text-slate-300">
                 {displayRawMaterials.map((row) => (
-                  <tr key={row.name} className="border-b border-slate-150">
-                    <td className="py-1 pr-2 text-slate-800">{row.name}</td>
-                    <td className="py-1 px-2 text-right font-mono text-slate-800">{row.valueStr}</td>
+                  <tr key={row.name} className="border-b border-slate-800/60">
+                    <td className="py-1 pr-2 text-slate-200">{row.name}</td>
+                    <td className="py-1 px-2 text-right font-mono text-slate-200">{row.valueStr}</td>
                     <td className="py-1 pl-2 text-right font-mono text-slate-400">{row.percent}</td>
                   </tr>
                 ))}
-                <tr className="text-blue-900 font-extrabold text-[11px] bg-slate-50/50">
+                <tr className="text-blue-400 font-extrabold text-[11px] bg-slate-800/40">
                   <td className="py-1.5 pr-2">ИТОГО</td>
                   <td className="py-1.5 px-2 text-right font-mono">{displayTotalRawMaterialsStr}</td>
                   <td className="py-1.5 pl-2 text-right font-mono">100,0%</td>
@@ -242,24 +242,24 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
                 <XAxis
                   type="number"
                   domain={[0, (dataMax: number) => Math.ceil((dataMax || 3000) * 1.25 / 500) * 500]}
-                  tick={{ fill: '#64748b', fontSize: 8, fontWeight: 'bold' }}
-                  axisLine={{ stroke: '#cbd5e1' }}
+                  tick={{ fill: '#94a3b8', fontSize: 8, fontWeight: 'bold' }}
+                  axisLine={{ stroke: '#334155' }}
                   tickLine={true}
                 />
                 <YAxis
                   type="category"
                   dataKey="chartName"
-                  tick={{ fill: '#334155', fontSize: 8, fontWeight: 'bold' }}
-                  axisLine={{ stroke: '#cbd5e1' }}
+                  tick={{ fill: '#cbd5e1', fontSize: 8, fontWeight: 'bold' }}
+                  axisLine={{ stroke: '#334155' }}
                   tickLine={true}
                   width={70}
                 />
-                <Bar dataKey="value" fill="#2e7d32" radius={[0, 2, 2, 0]} barSize={8}>
+                <Bar dataKey="value" fill="#10b981" radius={[0, 2, 2, 0]} barSize={8}>
                   <LabelList
                     dataKey="value"
                     position="right"
                     formatter={(val: any) => typeof val === 'number' ? Math.round(val).toLocaleString('ru-RU') : val}
-                    style={{ fill: '#334155', fontSize: 8, fontWeight: 'bold' }}
+                    style={{ fill: '#f1f5f9', fontSize: 8, fontWeight: 'bold' }}
                     offset={5}
                   />
                 </Bar>
@@ -271,37 +271,37 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
         {/* Column 2: ГОТОВАЯ ПРОДУКЦИЯ */}
         <div className="flex flex-col justify-between px-6 relative min-h-87.5">
           {pr010Error && (
-            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-10 p-4 text-center">
-              <span className="text-xs text-red-500 font-bold">Ошибка загрузки</span>
+            <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center z-10 p-4 text-center">
+              <span className="text-xs text-rose-400 font-bold">Ошибка загрузки</span>
               <span className="text-[10px] text-slate-400 mt-1">{pr010Error.message}</span>
             </div>
           )}
           <div className={`transition-all duration-300 flex flex-col justify-between h-full ${isPr010Loading ? 'opacity-60 animate-pulse' : ''}`}>
             <div>
-              <h3 className="text-emerald-700 text-[10px] font-black uppercase tracking-wide mb-3 flex items-center gap-2">
+              <h3 className="text-emerald-400 text-[10px] font-black uppercase tracking-wide mb-3 flex items-center gap-2">
                 7.2. ОСТАТОК ГОТОВОЙ ПРОДУКЦИИ: <span className="underline">{displayTotalFinishedGoodsStr} т</span>
                 {isPr010Loading && (
-                  <span className="inline-block w-3.5 h-3.5 border-2 border-emerald-700 border-t-transparent rounded-full animate-spin shrink-0"></span>
+                  <span className="inline-block w-3.5 h-3.5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin shrink-0"></span>
                 )}
               </h3>
 
               <table className="w-full text-[10px] text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-200 text-slate-500 font-bold">
+                  <tr className="border-b border-slate-800 text-slate-400 font-bold">
                     <th className="py-1.5 pr-2">Вид продукции</th>
                     <th className="py-1.5 px-2 text-right">Остаток, т</th>
                     <th className="py-1.5 pl-2 text-right">Доля</th>
                   </tr>
                 </thead>
-                <tbody className="font-bold text-slate-700">
+                <tbody className="font-bold text-slate-300">
                   {displayFinishedGoods.map((row) => (
-                    <tr key={row.name} className="border-b border-slate-150">
-                      <td className="py-1 pr-2 text-slate-800">{row.name}</td>
-                      <td className="py-1 px-2 text-right font-mono text-slate-800">{row.valueStr}</td>
+                    <tr key={row.name} className="border-b border-slate-800/60">
+                      <td className="py-1 pr-2 text-slate-200">{row.name}</td>
+                      <td className="py-1 px-2 text-right font-mono text-slate-200">{row.valueStr}</td>
                       <td className="py-1 pl-2 text-right font-mono text-slate-400">{row.percent}</td>
                     </tr>
                   ))}
-                  <tr className="text-blue-900 font-extrabold text-[11px] bg-slate-50/50">
+                  <tr className="text-blue-400 font-extrabold text-[11px] bg-slate-800/40">
                     <td className="py-1.5 pr-2">ИТОГО</td>
                     <td className="py-1.5 px-2 text-right font-mono">{displayTotalFinishedGoodsStr}</td>
                     <td className="py-1.5 pl-2 text-right font-mono">100,0%</td>
@@ -321,24 +321,24 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
                   <XAxis
                     type="number"
                     domain={[0, (dataMax: number) => Math.ceil((dataMax || 1500) * 1.2 / 500) * 500]}
-                    tick={{ fill: '#64748b', fontSize: 8, fontWeight: 'bold' }}
-                    axisLine={{ stroke: '#cbd5e1' }}
+                    tick={{ fill: '#94a3b8', fontSize: 8, fontWeight: 'bold' }}
+                    axisLine={{ stroke: '#334155' }}
                     tickLine={true}
                   />
                   <YAxis
                     type="category"
                     dataKey="chartName"
-                    tick={{ fill: '#334155', fontSize: 8, fontWeight: 'bold' }}
-                    axisLine={{ stroke: '#cbd5e1' }}
+                    tick={{ fill: '#cbd5e1', fontSize: 8, fontWeight: 'bold' }}
+                    axisLine={{ stroke: '#334155' }}
                     tickLine={true}
                     width={75}
                   />
-                  <Bar dataKey="value" fill="#2e7d32" radius={[0, 2, 2, 0]} barSize={8}>
+                  <Bar dataKey="value" fill="#10b981" radius={[0, 2, 2, 0]} barSize={8}>
                     <LabelList
                       dataKey="value"
                       position="right"
                       formatter={(val: any) => typeof val === 'number' ? Math.round(val).toLocaleString('ru-RU') : val}
-                      style={{ fill: '#334155', fontSize: 8, fontWeight: 'bold' }}
+                      style={{ fill: '#f1f5f9', fontSize: 8, fontWeight: 'bold' }}
                       offset={5}
                     />
                   </Bar>
@@ -351,37 +351,37 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
         {/* Column 3: РУЛОНЫ */}
         <div className="flex flex-col justify-between pl-6 relative min-h-87.5">
           {pr010Error && (
-            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-10 p-4 text-center">
-              <span className="text-xs text-red-500 font-bold">Ошибка загрузки</span>
+            <div className="absolute inset-0 bg-[#111827]/90 flex flex-col items-center justify-center z-10 p-4 text-center">
+              <span className="text-xs text-rose-400 font-bold">Ошибка загрузки</span>
               <span className="text-[10px] text-slate-400 mt-1">{pr010Error.message}</span>
             </div>
           )}
           <div className={`transition-all duration-300 flex flex-col justify-between h-full ${isPr010Loading ? 'opacity-60 animate-pulse' : ''}`}>
             <div>
-              <h3 className="text-blue-900 text-[10px] font-black uppercase tracking-wide mb-3 flex items-center gap-2">
+              <h3 className="text-blue-400 text-[10px] font-black uppercase tracking-wide mb-3 flex items-center gap-2">
                 7.3. ОСТАТОК РУЛОНОВ: <span className="underline">{displayTotalRollsStr} т</span>
                 {isPr010Loading && (
-                  <span className="inline-block w-3.5 h-3.5 border-2 border-blue-900 border-t-transparent rounded-full animate-spin shrink-0"></span>
+                  <span className="inline-block w-3.5 h-3.5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin shrink-0"></span>
                 )}
               </h3>
 
               <table className="w-full text-[10px] text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-200 text-slate-500 font-bold">
+                  <tr className="border-b border-slate-800 text-slate-400 font-bold">
                     <th className="py-1.5 pr-2">Цех / склад</th>
                     <th className="py-1.5 px-2 text-right">Остаток, т</th>
                     <th className="py-1.5 pl-2 text-right">Доля</th>
                   </tr>
                 </thead>
-                <tbody className="font-bold text-slate-700">
+                <tbody className="font-bold text-slate-300">
                   {displayRolls.map((row) => (
-                    <tr key={row.name} className="border-b border-slate-150">
-                      <td className="py-1 pr-2 text-slate-800">{row.name}</td>
-                      <td className="py-1 px-2 text-right font-mono text-slate-800">{row.valueStr}</td>
+                    <tr key={row.name} className="border-b border-slate-800/60">
+                      <td className="py-1 pr-2 text-slate-200">{row.name}</td>
+                      <td className="py-1 px-2 text-right font-mono text-slate-200">{row.valueStr}</td>
                       <td className="py-1 pl-2 text-right font-mono text-slate-400">{row.percent}</td>
                     </tr>
                   ))}
-                  <tr className="text-blue-900 font-extrabold text-[11px] bg-slate-50/50">
+                  <tr className="text-blue-400 font-extrabold text-[11px] bg-slate-800/40">
                     <td className="py-1.5 pr-2">ИТОГО</td>
                     <td className="py-1.5 px-2 text-right font-mono">{displayTotalRollsStr}</td>
                     <td className="py-1.5 pl-2 text-right font-mono">100,0%</td>
@@ -391,7 +391,7 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
             </div>
 
             {/* Chart at bottom */}
-            <div 
+            <div
               className="w-full mt-4 overflow-y-auto"
               style={{ height: displayRolls.length > 6 ? `${displayRolls.length * 22 + 40}px` : '176px', maxHeight: '300px' }}
             >
@@ -404,24 +404,24 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
                   <XAxis
                     type="number"
                     domain={[0, (dataMax: number) => Math.ceil((dataMax || 400) * 1.2 / 100) * 100]}
-                    tick={{ fill: '#64748b', fontSize: 8, fontWeight: 'bold' }}
-                    axisLine={{ stroke: '#cbd5e1' }}
+                    tick={{ fill: '#94a3b8', fontSize: 8, fontWeight: 'bold' }}
+                    axisLine={{ stroke: '#334155' }}
                     tickLine={true}
                   />
                   <YAxis
                     type="category"
                     dataKey="chartName"
-                    tick={{ fill: '#334155', fontSize: 8, fontWeight: 'bold' }}
-                    axisLine={{ stroke: '#cbd5e1' }}
+                    tick={{ fill: '#cbd5e1', fontSize: 8, fontWeight: 'bold' }}
+                    axisLine={{ stroke: '#334155' }}
                     tickLine={true}
                     width={75}
                   />
-                  <Bar dataKey="value" fill="#7b1fa2" radius={[0, 2, 2, 0]} barSize={8}>
+                  <Bar dataKey="value" fill="#a855f7" radius={[0, 2, 2, 0]} barSize={8}>
                     <LabelList
                       dataKey="value"
                       position="right"
                       formatter={(val: any) => typeof val === 'number' ? Math.round(val).toLocaleString('ru-RU') : val}
-                      style={{ fill: '#334155', fontSize: 8, fontWeight: 'bold' }}
+                      style={{ fill: '#f1f5f9', fontSize: 8, fontWeight: 'bold' }}
                       offset={5}
                     />
                   </Bar>

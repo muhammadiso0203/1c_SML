@@ -95,23 +95,23 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({ selectedDate, on
 
       {/* Popover Calendar */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 p-3 bg-white border border-slate-200 rounded-xl shadow-xl z-50 text-slate-800 w-70">
+        <div className="absolute right-0 mt-2 p-3 bg-[#1e293b] border border-slate-700 rounded-xl shadow-2xl z-50 text-slate-100 w-70">
           {/* Header */}
           <div className="flex items-center justify-between mb-3 px-1">
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="p-1 rounded-md hover:bg-slate-100 border border-slate-200 text-slate-600 transition-colors cursor-pointer"
+              className="p-1 rounded-md hover:bg-slate-700 border border-slate-600 text-slate-300 transition-colors cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="text-xs font-bold text-slate-700">
+            <span className="text-xs font-bold text-slate-200">
               {monthNames[month]} {year}
             </span>
             <button
               type="button"
               onClick={handleNextMonth}
-              className="p-1 rounded-md hover:bg-slate-100 border border-slate-200 text-slate-600 transition-colors cursor-pointer"
+              className="p-1 rounded-md hover:bg-slate-700 border border-slate-600 text-slate-300 transition-colors cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -149,8 +149,8 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({ selectedDate, on
                     ${selected 
                       ? 'bg-blue-600 text-white shadow-md' 
                       : today
-                        ? 'bg-slate-100 text-blue-600 border border-blue-200' 
-                        : 'hover:bg-slate-100 text-slate-700'
+                        ? 'bg-slate-800 text-blue-400 border border-blue-500/50' 
+                        : 'hover:bg-slate-700 text-slate-200'
                     }
                   `}
                 >

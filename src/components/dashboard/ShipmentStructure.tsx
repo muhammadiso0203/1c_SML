@@ -1,6 +1,6 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { usePr010 } from '../../pages/service/usePr010';
+import { usePr010 } from '../../pages/dashboard/service/usePr010';
 
 interface ShipmentData {
   name: string;
@@ -33,13 +33,13 @@ const nameMap: Record<string, string> = {
 const getProductDetails = (producttype: string, index: number) => {
   const p = producttype.trim();
   const name = nameMap[p] || p;
-  
+
   const defaultColors = [
-    '#0b3a82', '#388e3c', '#fbc02d', '#7b1fa2', '#f57c00', 
+    '#0b3a82', '#388e3c', '#fbc02d', '#7b1fa2', '#f57c00',
     '#4fc3f7', '#90caf9', '#0288d1', '#b0bec5', '#80deea',
     '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#009688'
   ];
-  
+
   const color = colorMap[p] || defaultColors[index % defaultColors.length];
   return { name, color };
 };
@@ -107,9 +107,9 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
     if (!data[index]) return null;
     const percentVal = data[index].percent;
     const isSmall = parseFloat(percentVal.replace(',', '.')) < 5;
-    
-    const radius = isSmall 
-      ? outerRadius + 14 
+
+    const radius = isSmall
+      ? outerRadius + 14
       : outerRadius * 0.6;
 
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -119,7 +119,7 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
       <text
         x={x}
         y={y}
-        fill={isSmall ? '#1e293b' : '#ffffff'}
+        fill={isSmall ? '#94a3b8' : '#ffffff'}
         textAnchor={isSmall ? (x > cx ? 'start' : 'end') : 'middle'}
         dominantBaseline="central"
         className="text-[10px] font-extrabold"
@@ -130,22 +130,22 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col h-full justify-between">
+    <div className="bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden flex flex-col h-full justify-between shadow-xl">
       {/* Header */}
-      <div className="bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between">
-        <h3 className="text-[#002f6c] text-sm font-extrabold uppercase tracking-wide text-center w-full">
-          5. СТРУКТУРА ОТГРУЗКИ ЗА {monthName} <span className="text-black font-normal lowercase">(по весу, т)</span>
+      <div className="bg-[#111827] border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+        <h3 className="text-white text-sm font-extrabold uppercase tracking-wide text-center w-full">
+          5. СТРУКТУРА ОТГРУЗКИ ЗА {monthName} <span className="text-slate-400 font-normal lowercase">(по весу, т)</span>
         </h3>
       </div>
 
       {/* Content */}
       <div className="p-6 flex-1 flex flex-col lg:flex-row gap-8 items-center justify-between relative min-h-75">
         {isPr010Loading && (
-          <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10">
-            <div className="inline-block w-8 h-8 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
+          <div className="absolute inset-0 bg-[#111827]/80 flex items-center justify-center z-10">
+            <div className="inline-block w-8 h-8 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
-        
+
         <div className={`flex-1 flex flex-col lg:flex-row gap-8 items-center justify-between w-full transition-all duration-300 ${isPr010Loading ? 'opacity-40' : ''}`}>
           {/* Left Side: Pie Chart */}
           <div className="w-full lg:w-1/2 h-64 flex items-center justify-center">
@@ -154,7 +154,8 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
                 <PieChart>
                   <Tooltip
                     formatter={(value: any, name: any) => [`${value} т`, name]}
-                    contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', fontFamily: 'sans-serif' }}
+                    contentStyle={{ backgroundColor: '#1e293b', borderRadius: '8px', border: '1px solid #334155', color: '#f8fafc', fontFamily: 'sans-serif' }}
+                    itemStyle={{ color: '#f8fafc' }}
                   />
                   <Pie
                     data={data}
@@ -177,7 +178,7 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
           </div>
 
           {/* Right Side: Detailed Table */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-between text-xs font-bold text-slate-700 h-full">
+          <div className="w-full lg:w-1/2 flex flex-col justify-between text-xs font-bold text-slate-300 h-full">
             <div className="flex flex-col gap-2 overflow-y-auto max-h-55 pr-1">
               {data.map((item) => (
                 <div key={item.name} className="flex items-center justify-between py-0.5">
@@ -186,26 +187,26 @@ export const ShipmentStructure: React.FC<{ date?: string }> = ({ date = "2026072
                       className="w-3 h-3 rounded shrink-0"
                       style={{ backgroundColor: item.color }}
                     />
-                    <span className="truncate text-[11px] font-bold text-slate-700">
+                    <span className="truncate text-[11px] font-bold text-slate-200">
                       {item.name}
                     </span>
                   </div>
                   <div className="flex items-center gap-4 text-right">
-                    <span className="font-mono text-slate-800 font-bold text-[11px]">{item.valueStr} т</span>
+                    <span className="font-mono text-slate-100 font-bold text-[11px]">{item.valueStr} т</span>
                     <span className="font-mono text-slate-400 w-12 text-[11px]">{item.percent}</span>
                   </div>
                 </div>
               ))}
             </div>
 
-            <hr className="border-slate-100 my-3" />
+            <hr className="border-slate-800 my-3" />
 
             {/* TOTAL Row */}
-            <div className="flex items-center justify-between text-xs font-extrabold text-[#002f6c] uppercase tracking-wide mt-auto">
+            <div className="flex items-center justify-between text-xs font-extrabold text-blue-400 uppercase tracking-wide mt-auto">
               <span>ИТОГО</span>
               <div className="flex items-center gap-4 text-right">
-                <span className="font-mono font-black text-[#002f6c] text-xs">{totalValueStr} т</span>
-                <span className="font-mono text-[#002f6c] w-12 text-xs">100,0%</span>
+                <span className="font-mono font-black text-blue-400 text-xs">{totalValueStr} т</span>
+                <span className="font-mono text-blue-400 w-12 text-xs">100,0%</span>
               </div>
             </div>
           </div>

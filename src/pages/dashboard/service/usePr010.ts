@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import api from "../../config/config";
+import api from "../../../config/config";
 import type { Pr010Response } from "./interface";
 
 export const usePr010 = (date: string = "20260724") => {
