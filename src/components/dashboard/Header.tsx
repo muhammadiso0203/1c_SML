@@ -18,6 +18,8 @@ interface DashboardHeaderProps {
   onChangeDate?: (date: Date) => void;
 }
 
+import { logoutUser } from '@/lib/auth';
+
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   title = "МОНИТОР РУКОВОДИТЕЛЯ",
   subtitle,
@@ -28,8 +30,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("user");
+    logoutUser();
     navigate("/", { replace: true });
   };
 

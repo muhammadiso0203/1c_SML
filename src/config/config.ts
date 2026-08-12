@@ -1,21 +1,38 @@
 import axios from "axios";
 
+import { checkAuth, logoutUser } from "@/lib/auth";
+
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
 api.interceptors.request.use((config) => {
-    const storedToken = localStorage.getItem("auth_token");
-    if (storedToken) {
-        config.headers.Authorization = `Basic ${storedToken}`;
-    } else {
-        const username = import.meta.env.VITE_API_USERNAME;
-        const password = import.meta.env.VITE_API_PASSWORD;
-        if (username && password) {
-            config.headers.Authorization = `Basic ${btoa(`${username}:${password}`)}`;
+    config.headers["X-Requested-With"] = "XMLHttpRequest";
+    if (!config.headers.Authorization) {
+        if (checkAuth()) {
+            const storedToken = localStorage.getItem("auth_token");
+            if (storedToken) {
+                config.headers.Authorization = `Basic ${storedToken}`;
+            }
+        } else {
+            const username = import.meta.env.VITE_API_USERNAME;
+            const password = import.meta.env.VITE_API_PASSWORD;
+            if (username && password) {
+                config.headers.Authorization = `Basic ${btoa(`${username}:${password}`)}`;
+            }
         }
     }
     return config;
 });
+
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            logoutUser();
+        }
+        return Promise.reject(error);
+    }
+);
 
 export default api;
