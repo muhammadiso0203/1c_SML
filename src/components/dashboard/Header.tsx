@@ -19,6 +19,7 @@ interface DashboardHeaderProps {
 }
 
 import { logoutUser } from '@/lib/auth';
+import { usePr010 } from '@/pages/dashboard/service/usePr010';
 
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   title = "МОНИТОР РУКОВОДИТЕЛЯ",
@@ -26,15 +27,13 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   selectedDate: propSelectedDate,
   onChangeDate: propOnChangeDate
 }) => {
-  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const username = localStorage.getItem("user") || "Admin";
 
   const handleLogout = () => {
     logoutUser();
     navigate("/", { replace: true });
   };
-
-  const username = localStorage.getItem("user") || "Admin";
 
   const urlParams = new URLSearchParams(window.location.search);
   const dateParam = urlParams.get('date') || '20260724';
@@ -52,6 +51,14 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
   const activeDate = propSelectedDate || localDate;
 
+  const y = activeDate.getFullYear();
+  const m = String(activeDate.getMonth() + 1).padStart(2, '0');
+  const d = String(activeDate.getDate()).padStart(2, '0');
+  const formattedDate = `${y}${m}${d}`;
+
+  const { data } = usePr010(formattedDate);
+  const navigate = useNavigate()
+
   const handleDateChange = (newDate: Date) => {
     if (propOnChangeDate) {
       propOnChangeDate(newDate);
@@ -68,14 +75,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     }
   };
 
-  const formattedDateStr = React.useMemo(() => {
-    const y = activeDate.getFullYear();
-    const m = String(activeDate.getMonth() + 1).padStart(2, '0');
-    const d = String(activeDate.getDate()).padStart(2, '0');
-    return `${d}.${m}.${y}`;
-  }, [activeDate]);
-
-  const displaySubtitle = subtitle || `к утру ${formattedDateStr} г.`;
+  const messageText = data?.message ? `${data.message} г.` : '';
+  const displaySubtitle = subtitle || (messageText ? `к утру ${messageText}` : `к утру`);
+  
 
   return (
     <>
@@ -130,7 +132,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             className="absolute inset-0 bg-slate-950/55 backdrop-blur-[2px]"
           />
 
-          <aside className="absolute left-0 top-0 h-full w-[280px] transform transition-transform duration-300 ease-out bg-[#0f172a] border-r border-slate-700 shadow-2xl z-10">
+          <aside className="absolute left-0 top-0 h-full w-7a0 transform transition-transform duration-300 ease-out bg-[#0f172a] border-r border-slate-700 shadow-2xl z-10">
             <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/90 px-4 py-3">
               <div>
                 <p className="text-[10px] uppercase tracking-[2px] text-blue-300">Навигация</p>

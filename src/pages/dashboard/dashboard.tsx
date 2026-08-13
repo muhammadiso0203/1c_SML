@@ -96,7 +96,6 @@ const Dashboard = () => {
         return (
             <div className="min-h-screen font-sans bg-[#090d16] text-slate-100">
                 <DashboardHeader
-                    subtitle={`к утру ${formattedDate} г.`}
                     generationDate={`${formattedDate} 08:00`}
                     selectedDate={selectedDate}
                     onChangeDate={handleDateChange}
