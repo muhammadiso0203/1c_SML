@@ -11,7 +11,6 @@ import { ShipmentDaily } from '../../components/dashboard/ShipmentDaily';
 import { OstatkiDetailed } from '../../components/dashboard/OstatkiDetailed';
 import { KpiTrafficLight } from '../../components/dashboard/KpiTrafficLight';
 import { DashboardFooter } from '../../components/dashboard/Footer';
-import Credits from './Credits';
 
 const Dashboard = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -55,7 +54,7 @@ const Dashboard = () => {
             url.searchParams.set('date', formatted);
             window.history.replaceState({}, '', url.toString());
         }
-    }, []);
+    }, [selectedDate]);
 
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
