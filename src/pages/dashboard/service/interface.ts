@@ -44,8 +44,15 @@ export interface A3Item{
   Monthly_issue: number;
 }
 
+export interface A2Item {
+  Equipment: string;
+  PercentageDay: number;
+  PercentageMonth: number;
+}
+
 export interface Pr010Data {
   A1?: A1Item;
+  A2?: A2Item[];
   A7_1?: any[];
   remains_RAW_MATERIALS?: number;
   A7_2: FinishedProductItem[];
@@ -65,3 +72,4 @@ export interface Pr010Response {
   message: string;
   data: Pr010Data;
 }
+
