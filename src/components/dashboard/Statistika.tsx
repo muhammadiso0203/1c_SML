@@ -110,6 +110,9 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
   }, [pr010Response]);
 
   const equipmentUsageVal = React.useMemo(() => {
+    if (pr010Response?.data?.EquipmentAvailability !== undefined) {
+      return pr010Response.data.EquipmentAvailability.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
     if (pr010Response?.data?.A2 && pr010Response.data.A2.length > 0) {
       const sum = pr010Response.data.A2.reduce((acc, item) => acc + (item.PercentageDay ?? 0), 0);
       const avg = sum / pr010Response.data.A2.length;

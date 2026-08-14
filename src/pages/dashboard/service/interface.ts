@@ -53,6 +53,7 @@ export interface A2Item {
 export interface Pr010Data {
   A1?: A1Item;
   A2?: A2Item[];
+  EquipmentAvailability?: number;
   A7_1?: any[];
   remains_RAW_MATERIALS?: number;
   A7_2: FinishedProductItem[];
