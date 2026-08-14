@@ -51,7 +51,7 @@ export const Ostatki: React.FC<{ date?: string }> = ({ date = "20260724" }) => {
       const avg = sum / pr010Response.data.A2.length;
       return avg.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     }
-    return '66,3';
+    return '0,0';
   }, [pr010Response]);
 
   const formatVal = (val: number) => {

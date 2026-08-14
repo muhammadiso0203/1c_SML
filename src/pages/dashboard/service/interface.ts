@@ -11,6 +11,12 @@ export interface OstatokResponse {
   data: OstatokItem[];
 }
 
+export interface RawMaterialItem {
+  producttype: string;
+  remains: number;
+  fraction: number;
+}
+
 export interface FinishedProductItem {
   producttype: string;
   remains: number;
@@ -54,7 +60,7 @@ export interface Pr010Data {
   A1?: A1Item;
   A2?: A2Item[];
   EquipmentAvailability?: number;
-  A7_1?: any[];
+  A7_1?: RawMaterialItem[];
   remains_RAW_MATERIALS?: number;
   A7_2: FinishedProductItem[];
   RESIDUAL_FINISHED_PRODUCT: number;

@@ -31,8 +31,9 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
     if (!pr010Response?.data?.A7_2) {
       return [];
     }
-    const total = pr010Response.data.RESIDUAL_FINISHED_PRODUCT || pr010Response.data.A7_2.reduce((sum, item) => sum + item.remains, 0);
-    return pr010Response.data.A7_2.map((item) => {
+    const filtered = pr010Response.data.A7_2.filter(item => item.remains > 0);
+    const total = pr010Response.data.RESIDUAL_FINISHED_PRODUCT || filtered.reduce((sum, item) => sum + item.remains, 0);
+    return filtered.map((item) => {
       const { name, chartName } = mapFinishedProduct(item.producttype);
       const val = item.remains;
       const frac = item.fraction !== undefined ? item.fraction : (total > 0 ? (val / total) * 100 : 0);
@@ -55,7 +56,7 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
 
   const totalFinishedGoodsStr = totalFinishedGoods.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
-  const displayFinishedGoods = apiFinishedGoods.length > 0 ? apiFinishedGoods : [];
+  const displayFinishedGoods = apiFinishedGoods;
   const displayTotalFinishedGoodsStr = apiFinishedGoods.length > 0 ? totalFinishedGoodsStr : '0,0';
 
   const mapRollsDivision = (division: string) => {
@@ -93,8 +94,9 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
     if (!pr010Response?.data?.A7_3) {
       return [];
     }
-    const total = pr010Response.data.remainsrolls || pr010Response.data.A7_3.reduce((sum, item) => sum + item.remains, 0);
-    return pr010Response.data.A7_3.map((item) => {
+    const filtered = pr010Response.data.A7_3.filter(item => item.remains > 0);
+    const total = pr010Response.data.remainsrolls || filtered.reduce((sum, item) => sum + item.remains, 0);
+    return filtered.map((item) => {
       const { name, chartName } = mapRollsDivision(item.division);
       const val = item.remains;
       const frac = item.fraction !== undefined ? item.fraction : (total > 0 ? (val / total) * 100 : 0);
@@ -117,7 +119,7 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
 
   const totalRollsStr = totalRolls.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
-  const displayRolls = apiRollsData.length > 0 ? apiRollsData : [];
+  const displayRolls = apiRollsData;
   const displayTotalRollsStr = apiRollsData.length > 0 ? totalRollsStr : '0,0';
 
   const mapGruppaTMC = (gruppa: string) => {
@@ -134,18 +136,36 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
   };
 
   const apiRawMaterials: TableRowData[] = React.useMemo(() => {
+    if (pr010Response?.data?.A7_1 && pr010Response.data.A7_1.length > 0) {
+      const filtered = pr010Response.data.A7_1.filter(item => item.remains > 0);
+      const total = pr010Response.data.remains_RAW_MATERIALS || filtered.reduce((sum, item) => sum + item.remains, 0);
+      return filtered.map((item) => {
+        const val = item.remains;
+        const frac = item.fraction !== undefined ? item.fraction : (total > 0 ? (val / total) * 100 : 0);
+        return {
+          name: item.producttype,
+          chartName: item.producttype,
+          value: val,
+          valueStr: val.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
+          percent: frac.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%',
+        };
+      }).sort((a, b) => b.value - a.value);
+    }
+
     if (!ostatokResponse?.success || !ostatokResponse.data) {
       return [];
     }
 
-    const items = ostatokResponse.data.map((item) => {
-      const { name, chartName } = mapGruppaTMC(item.GruppaTMC);
-      return {
-        name,
-        chartName,
-        value: item.quantity,
-      };
-    });
+    const items = ostatokResponse.data
+      .filter((item) => item.quantity > 0)
+      .map((item) => {
+        const { name, chartName } = mapGruppaTMC(item.GruppaTMC);
+        return {
+          name,
+          chartName,
+          value: item.quantity,
+        };
+      });
 
     const groupedMap = new Map<string, { name: string; chartName: string; value: number }>();
     items.forEach(item => {
@@ -167,15 +187,18 @@ export const OstatkiDetailed: React.FC<{ date?: string }> = ({ date = "20260724"
       valueStr: item.value.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 }),
       percent: total > 0 ? ((item.value / total) * 100).toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%' : '0%',
     })).sort((a, b) => b.value - a.value);
-  }, [ostatokResponse]);
+  }, [pr010Response, ostatokResponse]);
 
   const totalRawMaterials = React.useMemo(() => {
+    if (pr010Response?.data && pr010Response.data.remains_RAW_MATERIALS !== undefined) {
+      return pr010Response.data.remains_RAW_MATERIALS;
+    }
     return apiRawMaterials.reduce((sum, item) => sum + item.value, 0);
-  }, [apiRawMaterials]);
+  }, [pr010Response, apiRawMaterials]);
 
   const totalRawMaterialsStr = totalRawMaterials.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
-  const displayRawMaterials = apiRawMaterials.length > 0 ? apiRawMaterials : [];
+  const displayRawMaterials = apiRawMaterials;
   const displayTotalRawMaterialsStr = apiRawMaterials.length > 0 ? totalRawMaterialsStr : '0,0';
 
   return (

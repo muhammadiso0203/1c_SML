@@ -39,7 +39,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
     if (pr010Response?.data?.A3?.Daily_output !== undefined) {
       return pr010Response.data.A3.Daily_output.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     }
-    return '165,0';
+    return '0,0';
   }, [pr010Response, isPr010Loading]);
 
   const monthlyOutputStr = React.useMemo(() => {
@@ -47,7 +47,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
     if (pr010Response?.data?.A3?.Monthly_issue !== undefined) {
       return pr010Response.data.A3.Monthly_issue.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     }
-    return '4 910,9';
+    return '0,0';
   }, [pr010Response, isPr010Loading]);
 
   const planFulfillmentStr = React.useMemo(() => {
@@ -63,7 +63,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
         return pr010Response.data.A1.Implementation_of_the_Plan.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
       }
     }
-    return '51,5';
+    return '0,0';
   }, [pr010Response, isPr010Loading]);
 
   const dailyShipmentStr = React.useMemo(() => {
@@ -85,7 +85,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
     if (pr010Response?.data && pr010Response.data.shipment_PER_month !== undefined) {
       return pr010Response.data.shipment_PER_month.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     }
-    return '4 705,4';
+    return '0,0';
   }, [pr010Response, isPr010Loading]);
 
   const rawMaterialsSum = React.useMemo(() => {
@@ -118,7 +118,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       const avg = sum / pr010Response.data.A2.length;
       return avg.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
     }
-    return '66,3';
+    return '0,0';
   }, [pr010Response]);
 
   const formatVal = (val: number) => {

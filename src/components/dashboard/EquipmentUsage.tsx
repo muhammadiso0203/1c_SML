@@ -59,17 +59,8 @@ export const EquipmentUsage: React.FC<{ date?: string }> = ({ date = "20260724" 
       });
     }
 
-    // Fallback rows if backend hasn't returned A2 data
-    return [
-      { name: 'Экструдер', status: 'green', dayValue: '50 %', monthValue: '54 %' },
-      { name: 'Круглоткацкий', status: 'yellow', dayValue: '67 %', monthValue: '57 %' },
-      { name: 'Конвертекс', status: 'yellow', dayValue: '63 %', monthValue: '61 %' },
-      { name: 'Ламинация', status: 'red', dayValue: '50 %', monthValue: '46 %' },
-      { name: 'Выдувной', status: 'green', dayValue: '75 %', monthValue: '73 %' },
-      { name: 'БОПП', status: 'green', dayValue: '100 %', monthValue: '100 %' },
-      { name: 'Стрейч', status: 'red', dayValue: '0 %', monthValue: '53 %' },
-      { name: 'Резка и швейка', status: 'yellow', dayValue: '66 %', monthValue: '60 %' }
-    ];
+    // Return empty array if backend hasn't returned A2 data
+    return [];
   }, [pr010Response]);
 
   const statusColors: Record<string, string> = {
