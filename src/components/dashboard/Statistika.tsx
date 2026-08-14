@@ -34,6 +34,38 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
     return "ИЮЛЬ";
   }, [date]);
 
+  const dailyOutputStr = React.useMemo(() => {
+    if (isPr010Loading) return '...';
+    if (pr010Response?.data?.A3?.Daily_output !== undefined) {
+      return pr010Response.data.A3.Daily_output.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
+    return '165,0';
+  }, [pr010Response, isPr010Loading]);
+
+  const monthlyOutputStr = React.useMemo(() => {
+    if (isPr010Loading) return '...';
+    if (pr010Response?.data?.A3?.Monthly_issue !== undefined) {
+      return pr010Response.data.A3.Monthly_issue.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    }
+    return '4 910,9';
+  }, [pr010Response, isPr010Loading]);
+
+  const planFulfillmentStr = React.useMemo(() => {
+    if (isPr010Loading) return '...';
+    if (pr010Response?.data?.A1) {
+      const generalPlan = pr010Response.data.A1.General_Plan ?? 0;
+      const forecastEndMonth = pr010Response.data.A1.Forecast_for_the_End_of_the_Month ?? 0;
+      if (generalPlan > 0) {
+        const forecastPercentage = (forecastEndMonth / generalPlan) * 100;
+        return forecastPercentage.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      }
+      if (pr010Response.data.A1.Implementation_of_the_Plan !== undefined) {
+        return pr010Response.data.A1.Implementation_of_the_Plan.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      }
+    }
+    return '51,5';
+  }, [pr010Response, isPr010Loading]);
+
   const dailyShipmentStr = React.useMemo(() => {
     if (isPr010Loading) return '...';
     if (pr010Response?.data) {
@@ -96,7 +128,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       icon: <Factory className="w-6 h-6" />,
       labelLine1: 'ВЫПУСК',
       labelLine2: 'ЗА ДЕНЬ',
-      value: '165,0',
+      value: dailyOutputStr,
       unit: 'т',
       colorClass: {
         border: 'border-emerald-500/40 hover:border-emerald-400',
@@ -124,7 +156,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       icon: <TrendingUp className="w-6 h-6" />,
       labelLine1: 'ВЫПУСК',
       labelLine2: `ЗА ${monthName}`,
-      value: '4 910,9',
+      value: monthlyOutputStr,
       unit: 'т',
       colorClass: {
         border: 'border-emerald-500/40 hover:border-emerald-400',
@@ -152,7 +184,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       icon: <Target className="w-6 h-6" />,
       labelLine1: 'ВЫПОЛНЕНИЕ',
       labelLine2: 'ПЛАНА',
-      value: '94,4',
+      value: planFulfillmentStr,
       unit: '%',
       colorClass: {
         border: 'border-amber-500/40 hover:border-amber-400',
