@@ -53,14 +53,14 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
   const planFulfillmentStr = React.useMemo(() => {
     if (isPr010Loading) return '...';
     if (pr010Response?.data?.A1) {
-      const generalPlan = pr010Response.data.A1.General_Plan ?? 0;
-      const forecastEndMonth = pr010Response.data.A1.Forecast_for_the_End_of_the_Month ?? 0;
-      if (generalPlan > 0) {
-        const forecastPercentage = (forecastEndMonth / generalPlan) * 100;
-        return forecastPercentage.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-      }
       if (pr010Response.data.A1.Implementation_of_the_Plan !== undefined) {
         return pr010Response.data.A1.Implementation_of_the_Plan.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      }
+      const generalPlan = pr010Response.data.A1.General_Plan ?? 0;
+      const factOutput = pr010Response.data.A3?.Monthly_issue ?? 0;
+      if (generalPlan > 0) {
+        const percentage = (factOutput / generalPlan) * 100;
+        return percentage.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
       }
     }
     return '0,0';
