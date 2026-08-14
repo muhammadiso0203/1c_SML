@@ -134,7 +134,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: dailyOutputStr,
       unit: 'т',
       colorClass: {
-        border: 'border-emerald-500/40 hover:border-emerald-400',
+        border: 'border-emerald-500/40',
         text: 'text-emerald-400',
         icon: 'text-emerald-400',
         bg: 'bg-[#111827]/90'
@@ -148,7 +148,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: dailyShipmentStr,
       unit: 'т',
       colorClass: {
-        border: 'border-blue-500/40 hover:border-blue-400',
+        border: 'border-blue-500/40',
         text: 'text-blue-400',
         icon: 'text-blue-400',
         bg: 'bg-[#111827]/90'
@@ -162,7 +162,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: monthlyOutputStr,
       unit: 'т',
       colorClass: {
-        border: 'border-emerald-500/40 hover:border-emerald-400',
+        border: 'border-emerald-500/40',
         text: 'text-emerald-400',
         icon: 'text-emerald-400',
         bg: 'bg-[#111827]/90'
@@ -176,7 +176,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: monthlyShipmentStr,
       unit: 'т',
       colorClass: {
-        border: 'border-blue-500/40 hover:border-blue-400',
+        border: 'border-blue-500/40',
         text: 'text-blue-400',
         icon: 'text-blue-400',
         bg: 'bg-[#111827]/90'
@@ -190,7 +190,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: planFulfillmentStr,
       unit: '%',
       colorClass: {
-        border: 'border-amber-500/40 hover:border-amber-400',
+        border: 'border-amber-500/40 ',
         text: 'text-amber-400',
         icon: 'text-amber-400',
         bg: 'bg-[#111827]/90'
@@ -204,7 +204,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: isPr010Loading ? '...' : equipmentUsageVal,
       unit: '%',
       colorClass: {
-        border: 'border-purple-500/40 hover:border-purple-400',
+        border: 'border-purple-500/40 ',
         text: 'text-purple-400',
         icon: 'text-purple-400',
         bg: 'bg-[#111827]/90'
@@ -218,7 +218,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: isOstatokLoading ? '...' : formatVal(rawMaterialsSum),
       unit: 'т',
       colorClass: {
-        border: 'border-yellow-500/40 hover:border-yellow-400',
+        border: 'border-yellow-500/40',
         text: 'text-yellow-400',
         icon: 'text-yellow-400',
         bg: 'bg-[#111827]/90'
@@ -232,7 +232,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: isPr010Loading ? '...' : formatVal(finishedGoodsSum),
       unit: 'т',
       colorClass: {
-        border: 'border-emerald-500/40 hover:border-emerald-400',
+        border: 'border-emerald-500/40',
         text: 'text-emerald-400',
         icon: 'text-emerald-400',
         bg: 'bg-[#111827]/90'
@@ -246,7 +246,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
       value: isPr010Loading ? '...' : formatVal(rollsSum),
       unit: 'т',
       colorClass: {
-        border: 'border-sky-500/40 hover:border-sky-400',
+        border: 'border-sky-500/40',
         text: 'text-sky-400',
         icon: 'text-sky-400',
         bg: 'bg-[#111827]/90'
@@ -260,7 +260,7 @@ export const MetricCards: React.FC<{ date?: string }> = ({ date = "20260724" }) 
         {metrics.map((metric) => (
           <div
             key={metric.id}
-            className={`flex min-w-0 h-full flex-col justify-between rounded-xl border p-2.5 sm:p-3 ${metric.colorClass.border} ${metric.colorClass.bg} backdrop-blur-sm shadow-lg transition-all duration-200 hover:scale-[1.01]`}
+            className={`flex min-w-0 h-full flex-col justify-between rounded-xl border p-2.5 sm:p-3 ${metric.colorClass.border} ${metric.colorClass.bg} backdrop-blur-sm shadow-lg`}
           >
             {/* Top Row: Icon & Label */}
             <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">

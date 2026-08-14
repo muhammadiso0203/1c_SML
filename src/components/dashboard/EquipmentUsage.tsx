@@ -106,7 +106,7 @@ export const EquipmentUsage: React.FC<{ date?: string }> = ({ date = "20260724" 
               <tr className="border-b border-slate-800 bg-[#172033]">
                 <th className="py-1.5 px-3 font-bold text-slate-300 text-center border-l border-slate-800">
                   За день<br />
-                  <span className="text-[10px] text-slate-400 font-normal">{formattedDate}</span>
+                  {/* <span className="text-[10px] text-slate-400 font-normal">{formattedDate}</span> */}
                 </th>
                 <th className="py-1.5 px-3 font-bold text-slate-300 text-center border-l border-slate-800">
                   За {monthName}

@@ -87,7 +87,7 @@ export const CalendarPicker: React.FC<CalendarPickerProps> = ({ selectedDate, on
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 rounded-lg text-white text-xs md:text-sm font-medium transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 select-none cursor-pointer"
+        className="flex items-center gap-2 px-3 py-1.5 bg-white/10 border border-white/20 hover:border-white/30 rounded-lg text-white text-xs md:text-sm font-medium transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 select-none cursor-pointer"
       >
         <CalendarIcon className="w-4 h-4 text-blue-300 shrink-0" />
         <span className="font-mono font-medium">{formatDateLabel(selectedDate)}</span>
