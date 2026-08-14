@@ -26,15 +26,15 @@ const getStatus = (val: number): 'green' | 'yellow' | 'orange' | 'red' => {
 export const EquipmentUsage: React.FC<{ date?: string }> = ({ date = "20260724" }) => {
   const { data: pr010Response, isLoading } = usePr010(date);
 
-  const formattedDate = React.useMemo(() => {
-    if (date.length === 8) {
-      const y = date.substring(0, 4);
-      const m = date.substring(4, 6);
-      const d = date.substring(6, 8);
-      return `${d}.${m}.${y}`;
-    }
-    return date;
-  }, [date]);
+  // const formattedDate = React.useMemo(() => {
+  //   if (date.length === 8) {
+  //     const y = date.substring(0, 4);
+  //     const m = date.substring(4, 6);
+  //     const d = date.substring(6, 8);
+  //     return `${d}.${m}.${y}`;
+  //   }
+  //   return date;
+  // }, [date]);
 
   const monthName = React.useMemo(() => {
     if (date.length === 8) {
