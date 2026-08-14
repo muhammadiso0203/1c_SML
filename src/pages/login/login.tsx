@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/card";
 import { Eye, EyeOff, LockKeyhole, User2, Loader2 } from "lucide-react";
 
+import { checkAuth, setAuthSession } from "@/lib/auth";
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
@@ -27,7 +29,7 @@ const Login = () => {
   const dashboardPath = import.meta.env.VITE_DASHBOARD_PATH || "/dashboard";
 
   useEffect(() => {
-    if (localStorage.getItem("isAuthenticated") === "true") {
+    if (checkAuth()) {
       navigate(dashboardPath, { replace: true });
     }
   }, [navigate, dashboardPath]);
@@ -46,9 +48,7 @@ const Login = () => {
         onSuccess: (res) => {
           if (res && res.success !== false) {
             const token = btoa(`${username}:${password}`);
-            localStorage.setItem("isAuthenticated", "true");
-            localStorage.setItem("user", username);
-            localStorage.setItem("auth_token", token);
+            setAuthSession(username, token);
 
             toast.success("Muvaffaqiyatli tizimga kirdingiz", {
               position: "top-right",

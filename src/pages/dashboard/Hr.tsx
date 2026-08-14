@@ -1,8 +1,10 @@
 const Hr = () => {
   return (
-    <div className="min-h-screen p-6">
-      <h2 className="text-xl font-semibold text-white">Кадры</h2>
-      <p className="mt-3 text-slate-300">Здесь будет страница раздела Кадры.</p>
+    <div className="min-h-[60vh] flex items-center justify-center p-6">
+      <div className="max-w-xl rounded-3xl border border-slate-700 bg-slate-900/90 p-10 text-center shadow-2xl">
+        <h1 className="text-3xl font-bold text-white">В разработке</h1>
+        <p className="mt-4 text-slate-300">Этот раздел пока не доступен. Вернитесь на Главную для просмотра данных.</p>
+      </div>
     </div>
   );
 };

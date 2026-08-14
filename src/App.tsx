@@ -4,11 +4,12 @@ import { Toaster } from "sonner";
 import Login from "./pages/login/login";
 import Dashboard from "./pages/dashboard/dashboard";
 
+import { checkAuth } from "./lib/auth";
+
 const dashboardPath = import.meta.env.VITE_DASHBOARD_PATH || "/dashboard";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-  if (!isAuthenticated) {
+  if (!checkAuth()) {
     return <Navigate to="/" replace />;
   }
   return <>{children}</>;
@@ -22,7 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route
-            path={dashboardPath}
+            path={`${dashboardPath}/*`}
             element={
               <ProtectedRoute>
                 <Dashboard />

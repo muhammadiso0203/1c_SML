@@ -18,22 +18,22 @@ interface DashboardHeaderProps {
   onChangeDate?: (date: Date) => void;
 }
 
+import { logoutUser } from '@/lib/auth';
+import { usePr010 } from '@/pages/dashboard/service/usePr010';
+
 export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   title = "МОНИТОР РУКОВОДИТЕЛЯ",
   subtitle,
   selectedDate: propSelectedDate,
   onChangeDate: propOnChangeDate
 }) => {
-  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const username = localStorage.getItem("user") || "Admin";
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("user");
+    logoutUser();
     navigate("/", { replace: true });
   };
-
-  const username = localStorage.getItem("user") || "Admin";
 
   const urlParams = new URLSearchParams(window.location.search);
   const dateParam = urlParams.get('date') || '20260724';
@@ -51,6 +51,22 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
   const activeDate = propSelectedDate || localDate;
 
+  const y = activeDate.getFullYear();
+  const m = String(activeDate.getMonth() + 1).padStart(2, '0');
+  const d = String(activeDate.getDate()).padStart(2, '0');
+  const formattedDate = `${y}${m}${d}`;
+
+  const { data } = usePr010(formattedDate);
+  const navigate = useNavigate()
+  const rawDashboardBase = import.meta.env.VITE_DASHBOARD_PATH || '/dashboard';
+  const dashboardBase = (() => {
+    let b = String(rawDashboardBase || '/dashboard');
+    if (!b.startsWith('/')) b = '/' + b;
+    b = b.replace(/\/+$|\/+$/g, '');
+    if (b === '') b = '/';
+    return b;
+  })();
+
   const handleDateChange = (newDate: Date) => {
     if (propOnChangeDate) {
       propOnChangeDate(newDate);
@@ -67,14 +83,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
     }
   };
 
-  const formattedDateStr = React.useMemo(() => {
-    const y = activeDate.getFullYear();
-    const m = String(activeDate.getMonth() + 1).padStart(2, '0');
-    const d = String(activeDate.getDate()).padStart(2, '0');
-    return `${d}.${m}.${y}`;
-  }, [activeDate]);
-
-  const displaySubtitle = subtitle || `к утру ${formattedDateStr} г.`;
+  const messageText = data?.message ? `${data.message} г.` : '';
+  const displaySubtitle = subtitle || (messageText ? `к утру ${messageText}` : `к утру`);
+  
 
   return (
     <>
@@ -129,7 +140,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             className="absolute inset-0 bg-slate-950/55 backdrop-blur-[2px]"
           />
 
-          <aside className="absolute left-0 top-0 h-full w-[280px] transform transition-transform duration-300 ease-out bg-[#0f172a] border-r border-slate-700 shadow-2xl z-10">
+          <aside className="absolute left-0 top-0 h-full w-7a0 transform transition-transform duration-300 ease-out bg-[#0f172a] border-r border-slate-700 shadow-2xl z-10">
             <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/90 px-4 py-3">
               <div>
                 <p className="text-[10px] uppercase tracking-[2px] text-blue-300">Навигация</p>
@@ -150,7 +161,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate('/dashboard'); setIsSidebarOpen(false); }}
+                    onClick={() => { navigate(dashboardBase); setIsSidebarOpen(false); }}
                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
                   >
                     <span className="ml-1">Главная</span>
@@ -159,16 +170,16 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate('/dashboard/usage'); setIsSidebarOpen(false); }}
+                    onClick={() => { navigate(`${dashboardBase}/usage`); setIsSidebarOpen(false); }}
                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
                   >
-                    <span className="ml-1">Использование мощности</span>
+                    <span className="ml-1">Производство</span>
                   </button>
                 </li>
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate('/dashboard/hr'); setIsSidebarOpen(false); }}
+                    onClick={() => { navigate(`${dashboardBase}/hr`); setIsSidebarOpen(false); }}
                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
                   >
                     <span className="ml-1">Кадры</span>
@@ -177,10 +188,19 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate('/dashboard/finance'); setIsSidebarOpen(false); }}
+                    onClick={() => { navigate(`${dashboardBase}/finance`); setIsSidebarOpen(false); }}
                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
                   >
                     <span className="ml-1">Финансы</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { navigate(`${dashboardBase}/credits`); setIsSidebarOpen(false); }}
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                  >
+                    <span className="ml-1">Кредиты</span>
                   </button>
                 </li>
               </ul>
