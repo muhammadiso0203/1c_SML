@@ -23,7 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route
-            path={dashboardPath}
+            path={`${dashboardPath}/*`}
             element={
               <ProtectedRoute>
                 <Dashboard />

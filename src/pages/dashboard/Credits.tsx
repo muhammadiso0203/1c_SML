@@ -1,4 +1,6 @@
-const Usage = () => {
+import React from 'react';
+
+const Credits: React.FC = () => {
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-6">
       <div className="max-w-xl rounded-3xl border border-slate-700 bg-slate-900/90 p-10 text-center shadow-2xl">
@@ -9,4 +11,4 @@ const Usage = () => {
   );
 };
 
-export default Usage;
+export default Credits;
