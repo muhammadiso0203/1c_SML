@@ -1,0 +1,87 @@
+import React from 'react';
+
+interface KpiIndicator {
+  name: string;
+  status: 'green' | 'yellow' | 'orange' | 'red';
+}
+
+const indicators: KpiIndicator[] = [
+  { name: 'Выполнение плана', status: 'yellow' },
+  { name: 'Производство', status: 'green' },
+  { name: 'Отгрузка', status: 'green' },
+  { name: 'Использование оборудования', status: 'yellow' },
+  { name: 'БОПП', status: 'green' },
+  { name: 'Стрейч', status: 'red' },
+  { name: 'Выдувная плёнка', status: 'red' },
+  { name: 'Ламинация', status: 'orange' },
+  { name: 'Экструдер', status: 'yellow' },
+  { name: 'Круглоткацкий', status: 'yellow' },
+  { name: 'Резка и швейка', status: 'yellow' },
+];
+
+const statusColors: Record<string, string> = {
+  green: 'bg-emerald-600',
+  yellow: 'bg-amber-400',
+  orange: 'bg-orange-500',
+  red: 'bg-red-600',
+};
+
+export const KpiTrafficLight: React.FC = () => {
+  return (
+    <div className="bg-[#111827] rounded-2xl border border-slate-800 overflow-hidden flex flex-col h-full shadow-xl">
+      {/* Header */}
+      <div className="bg-[#1e293b] border-b border-slate-800 px-6 py-3.5 flex items-center justify-center">
+        <h2 className="text-white text-[clamp(0.7rem,1vw,0.9rem)] font-extrabold uppercase tracking-wide text-center">
+          8. СВЕТОФОР KPI
+        </h2>
+      </div>
+
+      {/* Main Content */}
+      <div className="p-3 sm:p-6 flex-1 flex flex-col justify-between">
+        
+        {/* Table */}
+        <table className="w-full text-[clamp(0.6rem,0.8vw,0.75rem)] font-bold text-slate-300 border-collapse">
+          <thead>
+            <tr className="border-b border-slate-800 text-slate-400 text-left font-bold text-[11px]">
+              <th className="py-1 pr-4">Показатель</th>
+              <th className="py-1 text-center w-16 border-l border-slate-800">Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            {indicators.map((item) => (
+              <tr key={item.name} className="border-b border-slate-800/60 hover:bg-slate-800/40">
+                <td className="py-1 pr-4 text-slate-200 font-bold">{item.name}</td>
+                <td className="py-1 text-center border-l border-slate-800">
+                  <div className={`w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full mx-auto ${statusColors[item.status]}`} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Legend Footer */}
+        <div className="mt-6 pt-4 border-t border-slate-800">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[clamp(0.55rem,0.8vw,0.7rem)] text-slate-400 font-bold justify-items-center">
+            <div className="flex items-center gap-1.5 w-full justify-start pl-2">
+              <span className="w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full bg-emerald-600 shrink-0" />
+              <span>Хорошо</span>
+            </div>
+            <div className="flex items-center gap-1.5 w-full justify-start pl-2">
+              <span className="w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full bg-amber-400 shrink-0" />
+              <span>Удовл.</span>
+            </div>
+            <div className="flex items-center gap-1.5 w-full justify-start pl-2">
+              <span className="w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full bg-orange-500 shrink-0" />
+              <span>Требует внимания</span>
+            </div>
+            <div className="flex items-center gap-1.5 w-full justify-start pl-2">
+              <span className="w-[clamp(0.8rem,1vw,1rem)] h-[clamp(0.8rem,1vw,1rem)] rounded-full bg-red-600 shrink-0" />
+              <span>Плохо</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
