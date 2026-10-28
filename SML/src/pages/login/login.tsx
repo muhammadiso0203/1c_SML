@@ -37,18 +37,41 @@ const Login = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    const cleanUser = username.trim();
+    const cleanPass = password.trim();
+
+    if (!cleanUser || !cleanPass) {
       toast.warning("Iltimos, barcha maydonlarni to'ldiring");
       return;
     }
 
+    // Standart login va parollar ro'yxati
+    const validLocalUsers: Record<string, string[]> = {
+      admin: ["123", "admin", "admin123"],
+      sml: ["123", "sml123", "admin"],
+      user: ["123", "12345", "user123"],
+    };
+
+    const allowedPasswords = validLocalUsers[cleanUser.toLowerCase()];
+    if (allowedPasswords && allowedPasswords.includes(cleanPass)) {
+      const token = btoa(`${cleanUser}:${cleanPass}`);
+      setAuthSession(cleanUser, token);
+
+      toast.success("Muvaffaqiyatli tizimga kirdingiz", {
+        position: "top-right",
+      });
+      navigate(dashboardPath, { replace: true });
+      return;
+    }
+
+    // Backend / API orqali tekshirish
     loginMutate(
-      { username, password },
+      { username: cleanUser, password: cleanPass },
       {
         onSuccess: (res) => {
           if (res && res.success !== false) {
-            const token = btoa(`${username}:${password}`);
-            setAuthSession(username, token);
+            const token = btoa(`${cleanUser}:${cleanPass}`);
+            setAuthSession(cleanUser, token);
 
             toast.success("Muvaffaqiyatli tizimga kirdingiz", {
               position: "top-right",

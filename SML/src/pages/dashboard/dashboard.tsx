@@ -11,6 +11,8 @@ import { ShipmentDaily } from '../../components/dashboard/ShipmentDaily';
 import { OstatkiDetailed } from '../../components/dashboard/OstatkiDetailed';
 import { KpiTrafficLight } from '../../components/dashboard/KpiTrafficLight';
 import { DashboardFooter } from '../../components/dashboard/Footer';
+import AiChatWidget from '../../components/ai/AiChatWidget';
+import { AiChatPage } from './AiChatPage';
 
 const Dashboard = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -108,18 +110,32 @@ const Dashboard = () => {
         return false;
     })();
 
+    const isAiChatPage = (() => {
+        return (
+            pathname === `${dashboardBase}/ai-chat` ||
+            pathname === `${dashboardBase}/ai` ||
+            pathname.endsWith('/ai-chat') ||
+            pathname.endsWith('/ai')
+        );
+    })();
+
     // Always render header (панель одинакова для всех страниц)
     return (
-        <div className="min-h-screen font-sans bg-[#090d16] text-slate-100">
+        <div className="min-h-screen font-sans bg-[#090d16] text-slate-100 relative">
             <DashboardHeader
                 generationDate={`${formattedDate} 08:00`}
                 selectedDate={selectedDate}
                 onChangeDate={handleDateChange}
             />
 
-            {/* Main content: show data only on exact dashboard base path, otherwise show placeholder */}
-            <main className="mx-auto px-6 py-6">
-                {isMainDashboard ? (
+            {/* Main content: show AI Chat page, Main Dashboard, or placeholder for other tabs */}
+            <main className="mx-auto px-4 sm:px-6 py-4">
+                {isAiChatPage ? (
+                    <AiChatPage
+                        dateParam={dateParam}
+                        formattedDate={formattedDate}
+                    />
+                ) : isMainDashboard ? (
                     <>
                         <MetricCards date={dateParam} />
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-2 items-stretch">
@@ -157,9 +173,18 @@ const Dashboard = () => {
                     </div>
                 )}
             </main>
+
+            {/* AI Agent Chat Floating Widget (shown on main dashboard, hidden on full-screen AI chat page) */}
+            {!isAiChatPage && (
+                <AiChatWidget
+                    dashboardContext={{
+                        selectedDate: formattedDate,
+                        dateParam,
+                    }}
+                />
+            )}
         </div>
     );
 };
 
 export default Dashboard;
-

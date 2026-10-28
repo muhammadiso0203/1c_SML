@@ -6,7 +6,7 @@ import {
   UserCircle2,
   X
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface DashboardHeaderProps {
   reportCode?: string;
@@ -57,7 +57,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const formattedDate = `${y}${m}${d}`;
 
   const { data } = usePr010(formattedDate);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
   const rawDashboardBase = import.meta.env.VITE_DASHBOARD_PATH || '/dashboard';
   const dashboardBase = (() => {
     let b = String(rawDashboardBase || '/dashboard');
@@ -85,7 +87,6 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
   const messageText = data?.message ? `${data.message} г.` : '';
   const displaySubtitle = subtitle || (messageText ? `к утру ${messageText}` : `к утру`);
-  
 
   return (
     <>
@@ -118,8 +119,8 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </div>
 
           {/* Right Side: User and Metadata */}
-          <div className="flex items-center justify-end gap-3 text-xs md:text-sm text-blue-100/90 w-full md:w-[22%] min-w-0 shrink-0 font-sans border-t border-slate-800 pt-3 sm:pt-0 sm:border-t-0 md:border-t-0">
-            <div className="flex items-center gap-2 hover:text-white transition-colors duration-200 px-3 py-1">
+          <div className="flex items-center justify-end gap-2.5 text-xs md:text-sm text-blue-100/90 w-full md:w-[28%] min-w-0 shrink-0 font-sans border-t border-slate-800 pt-3 sm:pt-0 sm:border-t-0 md:border-t-0">
+            <div className="flex items-center gap-2 hover:text-white transition-colors duration-200 px-2 py-1">
               <CalendarPicker selectedDate={activeDate} onChange={handleDateChange} />
             </div>
 
@@ -140,7 +141,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             className="absolute inset-0 bg-slate-950/55 backdrop-blur-[2px]"
           />
 
-          <aside className="absolute left-0 top-0 h-full w-7a0 transform transition-transform duration-300 ease-out bg-[#0f172a] border-r border-slate-700 shadow-2xl z-10">
+          <aside className="absolute left-0 top-0 h-full w-70 transform transition-transform duration-300 ease-out bg-[#0f172a] border-r border-slate-700 shadow-2xl z-10">
             <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/90 px-4 py-3">
               <div>
                 <p className="text-[10px] uppercase tracking-[2px] text-blue-300">Навигация</p>
@@ -161,8 +162,15 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate(dashboardBase); setIsSidebarOpen(false); }}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                    onClick={() => {
+                      navigate(dashboardBase);
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium cursor-pointer transition-colors ${
+                      pathname === dashboardBase || pathname === `${dashboardBase}/`
+                        ? 'bg-slate-800 text-white font-semibold'
+                        : 'text-slate-100 hover:bg-slate-800/60'
+                    }`}
                   >
                     <span className="ml-1">Главная</span>
                   </button>
@@ -170,8 +178,32 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate(`${dashboardBase}/usage`); setIsSidebarOpen(false); }}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                    onClick={() => {
+                      navigate(`${dashboardBase}/ai-chat`);
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium cursor-pointer transition-colors ${
+                      pathname.endsWith('/ai-chat')
+                        ? 'bg-slate-800 text-white font-semibold'
+                        : 'text-slate-100 hover:bg-slate-800/60'
+                    }`}
+                  >
+                    <span className="ml-1">AI Tahlilchi</span>
+                  </button>
+                </li>
+                
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate(`${dashboardBase}/usage`);
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium cursor-pointer transition-colors ${
+                      pathname.endsWith('/usage')
+                        ? 'bg-slate-800 text-white font-semibold'
+                        : 'text-slate-100 hover:bg-slate-800/60'
+                    }`}
                   >
                     <span className="ml-1">Производство</span>
                   </button>
@@ -179,8 +211,15 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate(`${dashboardBase}/hr`); setIsSidebarOpen(false); }}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                    onClick={() => {
+                      navigate(`${dashboardBase}/hr`);
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium cursor-pointer transition-colors ${
+                      pathname.endsWith('/hr')
+                        ? 'bg-slate-800 text-white font-semibold'
+                        : 'text-slate-100 hover:bg-slate-800/60'
+                    }`}
                   >
                     <span className="ml-1">Кадры</span>
                   </button>
@@ -188,8 +227,15 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate(`${dashboardBase}/finance`); setIsSidebarOpen(false); }}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                    onClick={() => {
+                      navigate(`${dashboardBase}/finance`);
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium cursor-pointer transition-colors ${
+                      pathname.endsWith('/finance')
+                        ? 'bg-slate-800 text-white font-semibold'
+                        : 'text-slate-100 hover:bg-slate-800/60'
+                    }`}
                   >
                     <span className="ml-1">Финансы</span>
                   </button>
@@ -197,8 +243,15 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <li>
                   <button
                     type="button"
-                    onClick={() => { navigate(`${dashboardBase}/credits`); setIsSidebarOpen(false); }}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-slate-800/60"
+                    onClick={() => {
+                      navigate(`${dashboardBase}/credits`);
+                      setIsSidebarOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium cursor-pointer transition-colors ${
+                      pathname.endsWith('/credits')
+                        ? 'bg-slate-800 text-white font-semibold'
+                        : 'text-slate-100 hover:bg-slate-800/60'
+                    }`}
                   >
                     <span className="ml-1">Кредиты</span>
                   </button>

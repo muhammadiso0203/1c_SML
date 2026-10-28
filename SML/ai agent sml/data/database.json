@@ -1,0 +1,47 @@
+{
+"success": true,
+"statusCode": 200,
+"message": "",
+"data": [
+{
+"GruppaTMC": "ПЭ - Полиэтилен",
+"quantity": 1074.113,
+"amount": 18538997.96
+},
+{
+"GruppaTMC": "ДБ- Добавки",
+"quantity": 583.071,
+"amount": 14987331.14
+},
+{
+"GruppaTMC": "ПП - Полипропилен",
+"quantity": 2518.9495,
+"amount": 31305135.08
+},
+{
+"GruppaTMC": "Растворитель ,Краска",
+"quantity": 28.855,
+"amount": 555784.37
+},
+{
+"GruppaTMC": "Отходы",
+"quantity": 190.10555,
+"amount": 1330738.85
+},
+{
+"GruppaTMC": "КР - Краситель",
+"quantity": 11.3433,
+"amount": 384704.3
+},
+{
+"GruppaTMC": "Регранулят",
+"quantity": 328.6464,
+"amount": 2843360.35
+},
+{
+"GruppaTMC": "МК - Микрокальцит",
+"quantity": 415.1172,
+"amount": 3455003.08
+}
+]
+}

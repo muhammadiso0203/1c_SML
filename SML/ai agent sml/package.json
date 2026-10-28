@@ -1,0 +1,33 @@
+{
+  "name": "ai-agent-db-analyzer",
+  "version": "1.0.0",
+  "description": "AI Agent that reads and analyzes database files with modern React Chat UI",
+  "main": "server.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"tsx watch server.ts\" \"npm run dev --prefix client\"",
+    "start": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"tsx server.ts\" \"npm run dev --prefix client\"",
+    "server": "tsx watch server.ts",
+    "client": "npm run dev --prefix client",
+    "analyze:cli": "tsx analyzer.ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "node-cron": "^4.6.0",
+    "openai": "^4.86.1",
+    "pg": "^8.13.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.2",
+    "@types/node-cron": "^3.0.11",
+    "@types/pg": "^8.23.1",
+    "concurrently": "^9.1.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

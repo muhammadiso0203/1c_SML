@@ -30,6 +30,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      '/ai-api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        rewrite: (reqPath) => reqPath.replace(/^\/ai-api/, '/api'),
+      },
       '/api': {
         target: 'https://base.migjs.uz:40320',
         changeOrigin: true,
